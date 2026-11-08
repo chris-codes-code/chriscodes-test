@@ -1,0 +1,22 @@
+{
+	"status": 200,
+	"data": {
+		"title": "Chris Codes Launch Kit",
+		"hero": {
+			"title": ""
+		},
+		"seo": {
+			"title": "Chris Codes Launch Kit",
+			"description": "Chris Codes Launch Kit is a starter site for building and launching new digital projects.",
+			"image": null,
+			"noindex": false
+		},
+		"content": [
+			{
+				"layout": "text",
+				"title": "Getting Started",
+				"text": "<p>This is a Nuxt starter for new Chris Codes frontend projects.</p><ol><li>Start with the layout. Edit <code>modules/layout/config.js</code> for the grid, breakpoints, and media queries, then run <code>yarn build:layout</code>. See the Layout section in <code>README.md</code> for more detail.</li><li>Add your colours, type, and space in <code>app/assets/css/variables/</code> and <code>app/assets/css/global/</code>, then update the <a href=\"/developer/style-guide\">Style Guide</a>.</li><li>Build and style UI building blocks in the <a href=\"/developer/component-library\">Component Library</a>.</li><li>Build the content components on the <a href=\"/developer/content-components\">Content Components</a> page. Add dummy content under <code>modules/content/fixtures</code>, then run <code>yarn build:content</code>. See the Content build section in <code>README.md</code> for more detail.</li></ol><p>Read the <code>README.md</code> in the repo for the full setup, env vars, and how the stack fits together.</p>"
+			}
+		]
+	}
+}

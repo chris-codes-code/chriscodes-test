@@ -1,0 +1,23 @@
+[data-theme] {
+	--theme-transition:
+		background-color var(--theme-color-ease), color var(--theme-color-ease), border-color var(--theme-color-ease);
+	--theme-interactive-transition:
+		background-color var(--transition-fast-ease), color var(--transition-fast-ease), border-color var(--transition-fast-ease);
+	transition: var(--theme-transition);
+}
+
+body.is-theme-transitioning {
+	--theme-interactive-transition: var(--theme-transition);
+}
+
+.--theme {
+	background-color: var(--theme-color-primary);
+	color: var(--theme-color-secondary);
+	transition: var(--theme-transition);
+}
+
+.--theme-inverse {
+	background-color: var(--theme-color-secondary);
+	color: var(--theme-color-primary);
+	transition: var(--theme-transition);
+}

@@ -1,0 +1,56 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: var(--font-size-base);
+}
+
+body {
+	&[data-theme='dark'] {
+		--theme-color-primary: var(--color-dark);
+		--theme-color-primary-rgb: var(--color-dark-rgb);
+		--theme-color-secondary: var(--color-white);
+		--theme-color-secondary-rgb: var(--color-white-rgb);
+	}
+
+	&[data-theme='light'] {
+		--theme-color-primary: var(--color-white);
+		--theme-color-primary-rgb: var(--color-white-rgb);
+		--theme-color-secondary: var(--color-dark);
+		--theme-color-secondary-rgb: var(--color-dark-rgb);
+	}
+
+	position: relative;
+	z-index: 0;
+	font: var(--font-body);
+	background-color: var(--theme-color-primary);
+	color: var(--theme-color-secondary);
+
+	&::before {
+		content: '';
+		position: fixed;
+		z-index: -1;
+		inset: -40%;
+		pointer-events: none;
+		background:
+			radial-gradient(circle at 28% 34%, color-mix(in srgb, white 7%, transparent), transparent 46%),
+			radial-gradient(circle at 74% 68%, color-mix(in srgb, black 6%, transparent), transparent 48%);
+		filter: blur(130px);
+		animation: page-wash 36s ease-in-out infinite alternate;
+	}
+}
+
+@keyframes page-wash {
+	to {
+		translate: 4% -3%;
+		rotate: 8deg;
+		scale: 1.05;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body::before {
+		animation: none;
+	}
+}

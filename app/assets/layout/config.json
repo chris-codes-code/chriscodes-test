@@ -1,0 +1,151 @@
+{
+	"gridColor": "orange",
+	"containerMode": "fluid-infinite",
+	"breakpoints": [
+		{
+			"name": {
+				"primary": "xs",
+				"secondary": "mobile"
+			},
+			"min": 0,
+			"columns": 2,
+			"contentWidth": null,
+			"fluid": true
+		},
+		{
+			"name": {
+				"primary": "sm",
+				"secondary": "mobile"
+			},
+			"min": 445,
+			"columns": 4,
+			"contentWidth": 400,
+			"fluid": false
+		},
+		{
+			"name": {
+				"primary": "md",
+				"secondary": "tablet"
+			},
+			"min": 889,
+			"columns": 4,
+			"contentWidth": 800,
+			"fluid": false
+		},
+		{
+			"name": {
+				"primary": "lg",
+				"secondary": "desktop"
+			},
+			"min": 1334,
+			"columns": 8,
+			"contentWidth": 1200,
+			"fluid": false
+		},
+		{
+			"name": {
+				"primary": "xl",
+				"secondary": "desktop"
+			},
+			"min": 1778,
+			"columns": 8,
+			"contentWidth": 1600,
+			"fluid": false
+		},
+		{
+			"name": {
+				"primary": "xxl",
+				"secondary": "desktop"
+			},
+			"min": 2223,
+			"columns": 12,
+			"contentWidth": 2000,
+			"fluid": false
+		},
+		{
+			"name": {
+				"primary": "max",
+				"secondary": "desktop"
+			},
+			"min": 2667,
+			"columns": 12,
+			"contentWidth": 2400,
+			"fluid": false
+		}
+	],
+	"screens": [
+		{
+			"name": {
+				"primary": "xs",
+				"secondary": "mobile"
+			},
+			"min": 0,
+			"max": 444
+		},
+		{
+			"name": {
+				"primary": "sm",
+				"secondary": "mobile"
+			},
+			"min": 445,
+			"max": 888
+		},
+		{
+			"name": {
+				"primary": "md",
+				"secondary": "tablet"
+			},
+			"min": 889,
+			"max": 1333
+		},
+		{
+			"name": {
+				"primary": "lg",
+				"secondary": "desktop"
+			},
+			"min": 1334,
+			"max": 1777
+		},
+		{
+			"name": {
+				"primary": "xl",
+				"secondary": "desktop"
+			},
+			"min": 1778,
+			"max": 2222
+		},
+		{
+			"name": {
+				"primary": "xxl",
+				"secondary": "desktop"
+			},
+			"min": 2223,
+			"max": 2666
+		},
+		{
+			"name": {
+				"primary": "max",
+				"secondary": "desktop"
+			},
+			"min": 2667,
+			"max": null
+		}
+	],
+	"imageScreens": {
+		"400": 400,
+		"800": 800,
+		"1200": 1200,
+		"1600": 1600,
+		"2000": 2000,
+		"2400": 2400,
+		"3200": 3200,
+		"4000": 4000,
+		"4800": 4800,
+		"sm": 445,
+		"md": 889,
+		"lg": 1334,
+		"xl": 1778,
+		"xxl": 2223,
+		"max": 2667
+	}
+}

@@ -1,0 +1,65 @@
+{
+	"navigation": {
+		"links": [
+			{
+				"gtm": {
+					"type": "link",
+					"category": "internal",
+					"label": "Home",
+					"clicked_from": "site-navigation",
+					"url": "/home"
+				},
+				"label": "Home",
+				"text": "Home",
+				"type": "internal",
+				"url": "/"
+			},
+			{
+				"gtm": {
+					"type": "link",
+					"category": "internal",
+					"label": "Style Guide",
+					"clicked_from": "site-navigation",
+					"url": "/developer/style-guide"
+				},
+				"label": "Style Guide",
+				"text": "Style Guide",
+				"type": "internal",
+				"url": "/developer/style-guide"
+			},
+			{
+				"gtm": {
+					"type": "link",
+					"category": "internal",
+					"label": "Component Library",
+					"clicked_from": "site-navigation",
+					"url": "/developer/component-library"
+				},
+				"label": "Component Library",
+				"text": "Component Library",
+				"type": "internal",
+				"url": "/developer/component-library"
+			},
+			{
+				"gtm": {
+					"type": "link",
+					"category": "internal",
+					"label": "Content Components",
+					"clicked_from": "site-navigation",
+					"url": "/developer/content-components"
+				},
+				"label": "Content Components",
+				"text": "Content Components",
+				"type": "internal",
+				"url": "/developer/content-components"
+			}
+		]
+	},
+	"notification": null,
+	"seo": {
+		"title": "Chris Codes Launch Kit",
+		"description": "Chris Codes Launch Kit is a starter site for building and launching new digital projects.",
+		"image": null,
+		"noindex": false
+	}
+}
