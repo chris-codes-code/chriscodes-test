@@ -14,20 +14,26 @@
 		"postinstall": "nuxt prepare"
 	},
 	"dependencies": {
+		"@mux/mux-player": "^3.14.1",
 		"@nuxt/image": "^2.2.0",
 		"css-reset-and-normalize": "^2.3.6",
 		"gsap": "^3.15.0",
+		"lenis": "^1.3.27",
+		"nodemailer": "^10.6.1",
 		"nuxt": "^4.6.2",
+		"rate-limiter-flexible": "^11.5.0",
 		"swiper": "^14.3.0",
 		"three": "^0.187.0",
 		"validator": "^13.15.35",
 		"vue": "^3.5.44",
 		"vue-router": "^5.4.0",
-		"xss": "^1.0.15"
+		"xss": "^1.0.15",
+		"zod": "^4.6.7"
 	},
 	"devDependencies": {
 		"@nuxt/eslint": "^1.17.0",
 		"@nuxtjs/sitemap": "^9.1.0",
+		"@types/nodemailer": "^8.0.2",
 		"eslint": "^10.13.0",
 		"postcss-custom-media": "^12.0.3",
 		"postcss-nested": "^9.0.1",
