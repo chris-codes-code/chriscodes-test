@@ -5,12 +5,19 @@ import { lockBodyScroll, unlockBodyScroll } from '~/assets/animations/utils/body
 
 const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
-const tween = {
+// Timing mirrors accordion content open/close
+const openTween = {
 	duration: config.duration.secondary,
-	ease: config.ease.secondary,
+	ease: config.ease.primary,
 };
 
-const offsetY = 10;
+const closeTween = {
+	duration: config.duration.primary,
+	ease: config.ease.primary,
+};
+
+const trayScale = 0.985;
+const offsetY = 6;
 
 const getElements = (modal) => ({
 	overlay: modal.querySelector('.ModalOverlay__overlay'),
@@ -66,7 +73,12 @@ const animateModalOverlay = {
 
 		instance.context.add(() => {
 			gsap.set(overlay, { opacity: 0 });
-			gsap.set(tray, { opacity: 0, y: offsetY });
+			gsap.set(tray, {
+				opacity: 0,
+				scale: trayScale,
+				transformOrigin: 'center center',
+				y: offsetY,
+			});
 		});
 	},
 
@@ -76,7 +88,9 @@ const animateModalOverlay = {
 			animate: ({ elements, timeline }) => {
 				const { overlay, tray } = elements;
 
-				timeline.to(overlay, { opacity: 1, ...tween }).to(tray, { opacity: 1, y: 0, ...tween }, '<');
+				timeline
+					.to(overlay, { opacity: 1, ...openTween })
+					.to(tray, { opacity: 1, scale: 1, y: 0, ...openTween }, '<');
 			},
 			before: () => callbacks.onEnter?.(),
 		});
@@ -95,7 +109,9 @@ const animateModalOverlay = {
 			animate: ({ elements, timeline }) => {
 				const { overlay, tray } = elements;
 
-				timeline.to(overlay, { opacity: 0, ...tween }).to(tray, { opacity: 0, y: offsetY, ...tween }, '<');
+				timeline
+					.to(overlay, { opacity: 0, ...closeTween })
+					.to(tray, { opacity: 0, scale: trayScale, y: offsetY, ...closeTween }, '<');
 			},
 			before: () => callbacks.onLeave?.(),
 		});

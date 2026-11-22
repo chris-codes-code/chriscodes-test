@@ -89,7 +89,10 @@
 					/>
 
 					<div class="ModalOverlay__container">
-						<div class="ModalOverlay__tray">
+						<div
+							class="ModalOverlay__tray"
+							data-lenis-prevent
+						>
 							<div class="ModalOverlay__sections">
 								<div class="ModalOverlay__section ModalOverlay__section--header">
 									<PrimitiveButton
@@ -137,12 +140,14 @@
 			position: absolute;
 			z-index: 10;
 			inset: 0;
-			background-color: rgba(var(--color-black-rgb), 0.5);
+			background-color: rgba(var(--theme-color-primary-rgb), 0.5);
 			backdrop-filter: blur(5px);
+			-webkit-backdrop-filter: blur(5px);
 			transform: translate3d(0, 0, 0);
 			backface-visibility: hidden;
 			transform-style: preserve-3d;
 			will-change: opacity;
+			transition: background-color var(--theme-color-ease);
 		}
 
 		&__container {
@@ -151,7 +156,7 @@
 			width: calc(100% - var(--container-gutter) * 2);
 			max-width: var(--content-width-max);
 			height: 100%;
-			padding: var(--container-gutter) 0;
+			padding: calc(var(--container-gutter) / 2) 0;
 		}
 
 		&__tray {
@@ -159,14 +164,22 @@
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
-			background-color: var(--color-white);
-			color: var(--color-black);
+			background-color: var(--theme-color-primary);
+			color: var(--theme-color-secondary);
+			border-radius: 20px;
+			corner-shape: squircle;
+			border: 1px solid color-mix(in srgb, var(--theme-color-secondary) 5%, transparent);
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 			-webkit-overflow-scrolling: touch;
 			overscroll-behavior: none;
 			transform: translate3d(0, 0, 0);
 			backface-visibility: hidden;
 			transform-style: preserve-3d;
 			will-change: transform;
+			transition:
+				background-color var(--theme-color-ease),
+				color var(--theme-color-ease),
+				border-color var(--theme-color-ease);
 		}
 
 		&__sections {
@@ -203,6 +216,7 @@
 			&--footer {
 				bottom: 0;
 				height: var(--core-header-height);
+				display: none;
 			}
 		}
 
