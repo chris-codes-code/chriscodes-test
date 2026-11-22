@@ -18,15 +18,16 @@ export default defineNuxtConfig({
 				...(isStaging ? [{ name: 'robots', content: 'noindex, nofollow' }] : []),
 				{
 					name: 'description',
-					content: 'Chris Codes Launch Kit Description',
+					content: 'Full-stack developer specialising in digital UI/UX experiences.',
 				},
 				{
 					name: 'theme-color',
-					content: '#ffffff',
+					content: '#111111',
 				},
 			],
 			link: [
 				{ crossorigin: 'anonymous', href: 'https://stream.mux.com', rel: 'preconnect' },
+				{ crossorigin: 'anonymous', href: 'https://www.datocms-assets.com', rel: 'preconnect' },
 				{
 					as: 'font',
 					crossorigin: 'anonymous',
@@ -49,11 +50,12 @@ export default defineNuxtConfig({
 					type: 'font/woff2',
 				},
 				{ rel: 'icon', href: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+				{ rel: 'icon', href: '/favicon.png', type: 'image/png', sizes: '32x32' },
 				{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
 				{ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
 				{ rel: 'manifest', href: '/site.webmanifest' },
 			],
-			title: `Chris Codes Launch Kit`,
+			title: 'Chris Codes',
 			viewport: 'width=device-width, initial-scale=1',
 		},
 		pageTransition: {
@@ -64,10 +66,14 @@ export default defineNuxtConfig({
 	compatibilityDate: '2025-07-15',
 	css: ['~/assets/css/index.css'],
 	devtools: { enabled: false },
+	experimental: {
+		appManifest: false,
+	},
 	image: {
-		domains: ['placehold.co'],
+		domains: ['placehold.co', 'www.datocms-assets.com'],
 		provider: process.env.VERCEL ? 'vercel' : 'ipx',
-		quality: 80,
+		format: ['avif', 'webp'],
+		quality: 75,
 		densities: [1, 2],
 		screens: layoutConfig.imageScreens,
 		ipx: {
@@ -87,8 +93,12 @@ export default defineNuxtConfig({
 		'@nuxt/image',
 		'@nuxtjs/sitemap',
 	],
+	nitro: {
+		compressPublicAssets: true,
+		minify: true,
+	},
 	site: {
-		name: 'Chris Codes Launch Kit',
+		name: 'Chris Codes',
 		url: process.env.SITE_URL,
 	},
 	sitemap: {
@@ -108,6 +118,42 @@ export default defineNuxtConfig({
 			'postcss-custom-media': {},
 		},
 	},
+	routeRules: {
+		'/**': {
+			headers: {
+				'Content-Security-Policy':
+					"default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data: https:; media-src 'self' blob: https:; connect-src 'self' blob: data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; worker-src 'self' blob:; upgrade-insecure-requests",
+				'Referrer-Policy': 'strict-origin-when-cross-origin',
+				'X-Content-Type-Options': 'nosniff',
+				'X-Frame-Options': 'SAMEORIGIN',
+			},
+		},
+		'/_ipx/**': {
+			headers: {
+				'cache-control': 'public, max-age=2592000, immutable',
+			},
+		},
+		'/fonts/**': {
+			headers: {
+				'cache-control': 'public, max-age=31536000',
+			},
+		},
+		'/favicon.ico': {
+			headers: {
+				'cache-control': 'public, max-age=86400',
+			},
+		},
+		'/favicon.png': {
+			headers: {
+				'cache-control': 'public, max-age=86400',
+			},
+		},
+		'/favicon.svg': {
+			headers: {
+				'cache-control': 'public, max-age=86400',
+			},
+		},
+	},
 	runtimeConfig: {
 		emailAccountUsername: process.env.EMAIL_ACCOUNT_USERNAME || '',
 		emailAccountPassword: process.env.EMAIL_ACCOUNT_PASSWORD || '',
@@ -121,7 +167,14 @@ export default defineNuxtConfig({
 			STAGING_MODE: process.env.STAGING_MODE,
 		},
 	},
-
+	vite: {
+		build: {
+			reportCompressedSize: false,
+		},
+		esbuild: {
+			legalComments: 'none',
+		},
+	},
 	vue: {
 		compilerOptions: {
 			isCustomElement: (tag) => tag === 'mux-player',
