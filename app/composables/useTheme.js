@@ -2,8 +2,9 @@ const THEME_COOKIE = 'theme';
 const THEMES = ['light', 'dark'];
 
 const getDefaultTheme = () => {
-	const hour = new Date().getHours();
-	return hour >= 18 || hour < 6 ? 'dark' : 'light';
+	// const hour = new Date().getHours();
+	// return hour >= 18 || hour < 6 ? 'dark' : 'light';
+	return 'dark';
 };
 
 export function useTheme() {
