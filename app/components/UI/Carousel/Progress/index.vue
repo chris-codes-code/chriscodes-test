@@ -1,14 +1,34 @@
 <script setup>
-	import { Mousewheel } from 'swiper/modules';
+	import { FreeMode, Mousewheel } from 'swiper/modules';
 
 	defineOptions({
 		inheritAttrs: false,
 	});
 
 	const props = defineProps({
+		centeredSlides: {
+			default: false,
+			type: Boolean,
+		},
+		freeMode: {
+			default: false,
+			type: Boolean,
+		},
 		initialSlide: {
 			default: 0,
 			type: Number,
+		},
+		mousewheel: {
+			default: true,
+			type: Boolean,
+		},
+		showControls: {
+			default: true,
+			type: Boolean,
+		},
+		showProgress: {
+			default: true,
+			type: Boolean,
 		},
 	});
 
@@ -46,14 +66,31 @@
 
 		if (isUnmounted || !carouselRef.value) return;
 
+		const modules = [
+			...(props.freeMode ? [FreeMode] : []),
+			...(props.mousewheel ? [Mousewheel] : []),
+		];
+
 		swiper = new Swiper(carouselRef.value, {
 			allowTouchMove: true,
+			centeredSlides: props.centeredSlides,
+			freeMode: props.freeMode
+				? {
+						enabled: true,
+						momentum: true,
+						momentumBounce: false,
+					}
+				: false,
 			grabCursor: true,
 			initialSlide: props.initialSlide,
-			modules: [Mousewheel],
-			mousewheel: {
-				forceToAxis: true,
-			},
+			modules,
+			...(props.mousewheel
+				? {
+						mousewheel: {
+							forceToAxis: true,
+						},
+					}
+				: {}),
 			slidesPerView: 'auto',
 			spaceBetween: 0,
 			on: {
@@ -88,7 +125,7 @@
 <template>
 	<div class="UICarouselProgress">
 		<div
-			v-if="paginationLength > 1"
+			v-if="showControls && paginationLength > 1"
 			class="UICarouselProgress__controls"
 		>
 			<UICarouselControls
@@ -114,7 +151,7 @@
 		</div>
 
 		<div
-			v-if="paginationLength > 1"
+			v-if="showProgress && paginationLength > 1"
 			class="UICarouselProgress__progress"
 		>
 			<div
