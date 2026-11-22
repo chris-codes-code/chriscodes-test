@@ -122,7 +122,7 @@ export default defineNuxtConfig({
 		'/**': {
 			headers: {
 				'Content-Security-Policy':
-					"default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; img-src 'self' data: blob: https:; font-src 'self' data: https:; media-src 'self' blob: https:; connect-src 'self' blob: data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; worker-src 'self' blob:; upgrade-insecure-requests",
+					"default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://player.vimeo.com https://www.googletagmanager.com; img-src 'self' data: blob: https:; font-src 'self' data: https:; media-src 'self' blob: https:; connect-src 'self' blob: data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; worker-src 'self' blob:; upgrade-insecure-requests",
 				'Referrer-Policy': 'strict-origin-when-cross-origin',
 				'X-Content-Type-Options': 'nosniff',
 				'X-Frame-Options': 'SAMEORIGIN',
