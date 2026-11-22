@@ -19,11 +19,15 @@ const presets = {
 	},
 };
 
+// columnsGapX: '1vw',
+// 	columnsGapY: '1vw',
+// 	containerGutter: '5vw',
+
 const defaults = {
 	gridColor: 'orange',
 	containerMode: 'fluid-infinite',
-	columnsGapX: '1vw',
-	columnsGapY: '1vw',
+	columnsGapX: '10px',
+	columnsGapY: '10px',
 	containerGutter: '5vw',
 	breakpoints: [
 		{ name: { primary: 'xs' }, columns: 4 },
@@ -33,6 +37,8 @@ const defaults = {
 			name: { primary: 'lg', secondary: 'desktop' },
 			contentWidth: '1200px',
 			columns: 8,
+			columnsGapX: '0.5vw',
+			columnsGapY: '0.5vw',
 		},
 		{
 			name: { primary: 'xl' },

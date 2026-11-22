@@ -18,16 +18,15 @@
 	--container-gutter: calc(var(--content-width-max) / 100 * 5 * min(1, 100vw / var(--container-width-max)));
 	--container-width: calc(var(--content-width) + var(--container-gutter) * 2);
 
-	--columns: 2;
-	--columns-gap-x-fluid: 1vw;
-	--columns-gap-x: calc(var(--content-width-max) / 100 * 1 * min(1, 100vw / var(--container-width-max)));
-	--columns-gap-y-fluid: 1vw;
-	--columns-gap-y: calc(var(--content-width-max) / 100 * 1 * min(1, 100vw / var(--container-width-max)));
+	--columns: 4;
+	--columns-gap-x-fluid: 10px;
+	--columns-gap-x: 10px;
+	--columns-gap-y-fluid: 10px;
+	--columns-gap-y: 10px;
 	--column-width: calc((var(--content-width) - (var(--columns) - 1) * var(--columns-gap-x)) / var(--columns));
 
 	@media (--screen-sm-min) {
 		--content-width: var(--content-width-sm);
-		--columns: 4;
 	}
 
 	@media (--screen-md-min) {
@@ -37,6 +36,11 @@
 	@media (--screen-lg-min) {
 		--content-width: var(--content-width-lg);
 		--columns: 8;
+
+		--columns-gap-x-fluid: 0.5vw;
+		--columns-gap-x: calc(var(--content-width-max) / 100 * 0.5 * min(1, 100vw / var(--container-width-max)));
+		--columns-gap-y-fluid: 0.5vw;
+		--columns-gap-y: calc(var(--content-width-max) / 100 * 0.5 * min(1, 100vw / var(--container-width-max)));
 	}
 
 	@media (--screen-xl-min) {

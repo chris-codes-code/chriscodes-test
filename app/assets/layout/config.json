@@ -8,7 +8,7 @@
 				"secondary": "mobile"
 			},
 			"min": 0,
-			"columns": 2,
+			"columns": 4,
 			"contentWidth": null,
 			"fluid": true
 		},
