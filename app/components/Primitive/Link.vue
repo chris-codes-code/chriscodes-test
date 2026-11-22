@@ -37,9 +37,24 @@
 		},
 	});
 
-	const onClick = () => {
+	const emit = defineEmits(['click']);
+
+	const to = computed(() => {
+		if (props.type === 'external') return props.url;
+
+		const hashIndex = props.url.indexOf('#');
+		if (hashIndex === -1) return props.url;
+
+		return {
+			path: props.url.slice(0, hashIndex) || '/',
+			hash: props.url.slice(hashIndex),
+		};
+	});
+
+	const onClick = (event) => {
 		if (props.disabled) return;
 		if (props.gtm) trackClick(props.gtm);
+		emit('click', event);
 	};
 </script>
 
@@ -53,7 +68,7 @@
 		:external="type === 'external'"
 		:rel="type === 'external' ? 'noopener noreferrer' : null"
 		:target="type === 'external' ? target : null"
-		:to="url"
+		:to="to"
 		@click="onClick"
 	>
 		<slot />
