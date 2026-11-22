@@ -13,3 +13,14 @@
 		transform: rotate(1turn);
 	}
 }
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-scroll-reveal]:not([data-scroll-reveal='ready']) {
+		opacity: 0;
+	}
+
+	html[data-intro='pending'] .CoreHeader__island {
+		opacity: 0 !important;
+		visibility: hidden;
+	}
+}

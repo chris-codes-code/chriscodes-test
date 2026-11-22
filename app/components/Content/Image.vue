@@ -9,11 +9,16 @@
 			type: Object,
 		},
 	});
+
+	const rootRef = ref(null);
+
+	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/image.js'), 'animateContentImage');
 </script>
 
 <template>
 	<div
 		v-if="image"
+		ref="rootRef"
 		class="ContentImage"
 	>
 		<BlockContainer>

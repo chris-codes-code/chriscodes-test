@@ -105,6 +105,16 @@ out: (element) => {
 ## What’s here
 
 - `config.js` — shared animation values
+- `intro/` — first-load landing sequence (header + hero + companion)
 - `modal/` — modal animations
+- `scroll/` — ScrollTrigger intro/outro reveals (text, title, work, masonry, image, hero)
 - `ui/` — component animations
-- `utils/` — loader, instance store, body scroll lock
+- `utils/` — loader, instance store, body scroll lock, Lenis store, reduced-motion helper
+
+## Smooth scroll
+
+Lenis is initialised in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger. Body scroll lock pauses Lenis. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
+
+## Landing intro
+
+`intro/landing.js` orchestrates the homepage first paint: header + primary title together, then secondary title. The companion fades in on its own when the GLB is ready, so model load never blocks the intro.

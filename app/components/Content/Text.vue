@@ -9,11 +9,16 @@
 			type: String,
 		},
 	});
+
+	const rootRef = ref(null);
+
+	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/text.js'), 'animateContentText');
 </script>
 
 <template>
 	<div
 		v-if="text"
+		ref="rootRef"
 		class="ContentText"
 	>
 		<BlockContainer>
@@ -53,6 +58,11 @@
 
 		&__title {
 			margin-bottom: var(--space-lg);
+		}
+
+		&__split-word {
+			display: inline-block;
+			will-change: transform, opacity, filter;
 		}
 	}
 </style>
