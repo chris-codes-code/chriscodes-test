@@ -251,7 +251,7 @@
 		}
 
 		&__submit {
-			margin-top: var(--space-lg);
+			margin-top: var(--space-md);
 		}
 	}
 </style>

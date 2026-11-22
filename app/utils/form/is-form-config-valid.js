@@ -6,11 +6,11 @@ const formConfig = {
 		cta: 'string',
 		success: {
 			message: 'string',
-			resetText: 'string',
+			resetText: 'string | null (optional)',
 		},
 		error: {
 			message: 'string',
-			resetText: 'string',
+			resetText: 'string | null (optional)',
 		},
 	},
 };
@@ -22,9 +22,7 @@ const isFormConfigValid = (form) => {
 		Array.isArray(form.fieldsets) &&
 		form.submit?.cta &&
 		form.submit?.success?.message &&
-		form.submit?.success?.resetText &&
-		form.submit?.error?.message &&
-		form.submit?.error?.resetText,
+		form.submit?.error?.message,
 	);
 
 	if (!valid) console.warn('[FormHandler] `form` must match:', formConfig);

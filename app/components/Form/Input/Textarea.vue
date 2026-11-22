@@ -40,6 +40,8 @@
 		textarea.FormInput__input {
 			display: block;
 			min-height: 10rem;
+			padding-block: 1.15em;
+			resize: vertical;
 		}
 	}
 </style>

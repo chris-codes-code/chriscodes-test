@@ -114,10 +114,7 @@
 			&:focus + .FormInput__checkbox-box,
 			&:focus-visible + .FormInput__checkbox-box {
 				border-color: var(--form-input-border-color-focus);
-
-				&::before {
-					opacity: 1;
-				}
+				background-color: var(--form-input-hover);
 			}
 		}
 
@@ -128,17 +125,9 @@
 			height: 1.25rem;
 			background-color: transparent;
 			border: 1px solid var(--form-input-border-color);
-			transition: border-color var(--transition-fast-ease);
-
-			&::before {
-				content: '';
-				position: absolute;
-				inset: 0;
-				pointer-events: none;
-				box-shadow: var(--form-input-box-shadow-focus);
-				opacity: 0;
-				transition: opacity var(--transition-fast-ease);
-			}
+			border-radius: 6px;
+			corner-shape: squircle;
+			transition: var(--theme-interactive-transition);
 
 			&::after {
 				content: '';

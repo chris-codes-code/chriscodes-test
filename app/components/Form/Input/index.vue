@@ -67,7 +67,6 @@
 			:class="{
 				FormInput__label: true,
 				[`FormInput__label--${input.type}`]: input.type,
-				'type-ui': true,
 			}"
 			:for="isCheckboxGroup || isConsent ? undefined : id"
 		>
@@ -108,9 +107,10 @@
 
 	.FormInput {
 		--form-input-width: 100%;
-		--form-input-border-color: rgb(from currentColor r g b / 50%);
-		--form-input-border-color-focus: currentColor;
-		--form-input-box-shadow-focus: 0 0 0 2px rgb(from currentColor r g b / 15%);
+		--form-input-border-color: color-mix(in srgb, currentColor 5%, transparent);
+		--form-input-border-color-focus: color-mix(in srgb, currentColor 15%, transparent);
+		--form-input-hover: color-mix(in srgb, currentColor 5%, transparent);
+		--form-input-radius: 16px;
 
 		&--width-half {
 			@media (--screen-desktop) {
@@ -134,7 +134,11 @@
 			pointer-events: all;
 			cursor: default;
 			color: currentColor;
+			font-family: var(--font-family-primary);
+			font-size: 13px;
+			line-height: 1;
 			white-space: nowrap;
+			transition: color var(--theme-color-ease);
 
 			&:is(label) {
 				cursor: pointer;
@@ -144,26 +148,11 @@
 		&__error-message {
 			grid-area: end;
 			color: rgb(from currentColor r g b / 50%);
+			transition: color var(--theme-color-ease);
 		}
 
 		&__input-wrapper {
 			position: relative;
-
-			&:not(.FormInput__input-wrapper--checkbox):not(.FormInput__input-wrapper--consent) {
-				&::after {
-					content: '';
-					position: absolute;
-					inset: 0;
-					pointer-events: none;
-					box-shadow: var(--form-input-box-shadow-focus);
-					opacity: 0;
-					transition: opacity var(--transition-fast-ease);
-				}
-
-				&:focus-within::after {
-					opacity: 1;
-				}
-			}
 
 			&--checkbox {
 				display: flex;
@@ -186,30 +175,42 @@
 
 		&__input {
 			position: relative;
-			background-color: transparent;
-			color: currentColor;
-			border-radius: 0;
-			border: 1px solid var(--form-input-border-color);
 			width: 100%;
-			padding: 15px;
+			min-height: 44px;
+			padding: 1.15em 1.25em;
+			font-family: var(--font-family-primary);
+			font-size: 13px;
+			line-height: 1.25;
+			color: currentColor;
 			text-align: inherit;
+			background-color: transparent;
+			border: 1px solid var(--form-input-border-color);
+			border-radius: var(--form-input-radius);
+			corner-shape: squircle;
 			outline: none;
-			transition:
-				background-color var(--transition-fast-ease),
-				border-color var(--transition-fast-ease),
-				color var(--transition-fast-ease);
+			transition: var(--theme-interactive-transition);
 
 			&::placeholder {
-				color: rgb(from currentColor r g b / 25%);
+				color: rgb(from currentColor r g b / 35%);
 				transition: opacity var(--transition-fast-ease);
+			}
+
+			&:hover:not(:disabled):not(:focus) {
+				background-color: var(--form-input-hover);
 			}
 
 			&:focus {
 				border-color: var(--form-input-border-color-focus);
+				background-color: var(--form-input-hover);
 
 				&::placeholder {
 					opacity: 0;
 				}
+			}
+
+			&:disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
 			}
 		}
 	}

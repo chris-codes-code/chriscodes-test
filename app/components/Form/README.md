@@ -48,8 +48,8 @@ Pass a `form` object into `FormHandler`. It renders fieldsets, validates on subm
 | `fieldsets`      | yes      | Array of `{ legend, inputs }` |
 | `footnote`       | no       | HTML/text under the fields    |
 | `submit.cta`     | yes      | Button label                  |
-| `submit.success` | yes      | `message` and `resetText`     |
-| `submit.error`   | yes      | `message` and `resetText`     |
+| `submit.success` | yes      | `message` required; `resetText` optional (`null` hides reset) |
+| `submit.error`   | yes      | `message` required; `resetText` optional (`null` hides reset) |
 
 ### Inputs
 

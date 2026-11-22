@@ -71,11 +71,11 @@
 				:disabled="disabled"
 				:type="type"
 			>
-				<StyleUIButton>
+				<StyleUIButtonIcon text>
 					<Action :active="sending">
 						{{ submitCta }}
 					</Action>
-				</StyleUIButton>
+				</StyleUIButtonIcon>
 			</PrimitiveButton>
 		</div>
 
@@ -169,11 +169,8 @@
 
 		&__notice {
 			word-break: break-word;
-			text-wrap: balance;
 
-			@supports not (text-wrap: balance) {
-				text-wrap: pretty;
-			}
+			transition: color var(--theme-color-ease);
 		}
 	}
 </style>
