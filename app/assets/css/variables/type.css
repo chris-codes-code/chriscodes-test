@@ -5,7 +5,7 @@
 	--font-family-primary-bold: 'roboto-bold', Arial, Helvetica, sans-serif;
 	--font-family-secondary: 'nunito-regular', Arial, Helvetica, sans-serif;
 
-	--font-body: normal normal 400 1rem / 1.65 var(--font-family-secondary);
+	--font-body: normal normal 400 1.25rem / 1.5 var(--font-family-secondary);
 	--font-heading: normal normal 400 1rem / 1.25 var(--font-family-primary-bold);
 	--font-ui: normal normal 400 1rem / 1.25 var(--font-family-primary);
 

@@ -68,7 +68,7 @@ p + p {
 	font: var(--font-ui);
 	display: block;
 	margin: 0;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	letter-spacing: 0.05em;
 
 	&--sm {
