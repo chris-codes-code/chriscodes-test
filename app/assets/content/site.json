@@ -5,59 +5,46 @@
 				"gtm": {
 					"type": "link",
 					"category": "internal",
-					"label": "Home",
+					"label": "About",
 					"clicked_from": "site-navigation",
-					"url": "/home"
+					"url": "/#about"
 				},
-				"label": "Home",
-				"text": "Home",
+				"label": "About",
+				"text": "About",
 				"type": "internal",
-				"url": "/"
+				"url": "/#about"
 			},
 			{
 				"gtm": {
 					"type": "link",
 					"category": "internal",
-					"label": "Style Guide",
+					"label": "Work",
 					"clicked_from": "site-navigation",
-					"url": "/developer/style-guide"
+					"url": "/#work"
 				},
-				"label": "Style Guide",
-				"text": "Style Guide",
+				"label": "Work",
+				"text": "Work",
 				"type": "internal",
-				"url": "/developer/style-guide"
+				"url": "/#work"
 			},
 			{
 				"gtm": {
 					"type": "link",
 					"category": "internal",
-					"label": "Component Library",
+					"label": "Think",
 					"clicked_from": "site-navigation",
-					"url": "/developer/component-library"
+					"url": "/#think"
 				},
-				"label": "Component Library",
-				"text": "Component Library",
+				"label": "Think",
+				"text": "Think",
 				"type": "internal",
-				"url": "/developer/component-library"
-			},
-			{
-				"gtm": {
-					"type": "link",
-					"category": "internal",
-					"label": "Content Components",
-					"clicked_from": "site-navigation",
-					"url": "/developer/content-components"
-				},
-				"label": "Content Components",
-				"text": "Content Components",
-				"type": "internal",
-				"url": "/developer/content-components"
+				"url": "/#think"
 			}
 		]
 	},
 	"notification": null,
 	"seo": {
-		"title": "Chris Codes Launch Kit",
+		"title": "EAT ✱ SLEEP ✱ CREATE ✱ REPEAT",
 		"description": "Chris Codes Launch Kit is a starter site for building and launching new digital projects.",
 		"image": null,
 		"noindex": false

@@ -1,12 +1,12 @@
 {
 	"status": 200,
 	"data": {
-		"title": "Chris Codes Launch Kit",
+		"title": "EAT ✱ SLEEP ✱ CREATE ✱ REPEAT",
 		"hero": {
 			"title": ""
 		},
 		"seo": {
-			"title": "Chris Codes Launch Kit",
+			"title": "EAT ✱ SLEEP ✱ CREATE ✱ REPEAT",
 			"description": "Chris Codes Launch Kit is a starter site for building and launching new digital projects.",
 			"image": null,
 			"noindex": false
@@ -14,8 +14,294 @@
 		"content": [
 			{
 				"layout": "text",
-				"title": "Getting Started",
-				"text": "<p>This is a Nuxt starter for new Chris Codes frontend projects.</p><ol><li>Start with the layout. Edit <code>modules/layout/config.js</code> for the grid, breakpoints, and media queries, then run <code>yarn build:layout</code>. See the Layout section in <code>README.md</code> for more detail.</li><li>Add your colours, type, and space in <code>app/assets/css/variables/</code> and <code>app/assets/css/global/</code>, then update the <a href=\"/developer/style-guide\">Style Guide</a>.</li><li>Build and style UI building blocks in the <a href=\"/developer/component-library\">Component Library</a>.</li><li>Build the content components on the <a href=\"/developer/content-components\">Content Components</a> page. Add dummy content under <code>modules/content/fixtures</code>, then run <code>yarn build:content</code>. See the Content build section in <code>README.md</code> for more detail.</li></ol><p>Read the <code>README.md</code> in the repo for the full setup, env vars, and how the stack fits together.</p>"
+				"title": null,
+				"text": "<p>Hi, I’m a full-stack engineer with 11 years of experience building scalable products. I specialise in front-end craft, headless architectures and modern JavaScript.</p><p>I also design processes that make it easy for people to contribute, help developers grow, and leave room to improve as we go. I care about shipping work that holds up in production, with accessibility, performance, scalability and maintainability in mind.</p><p>I lead delivery, mentor engineers, and work closely with designers and clients to turn complex ideas into software that lasts, using AI-assisted workflows alongside solid architecture to move quicker without cutting corners.</p>"
+			},
+			{
+				"layout": "title",
+				"title": "work",
+				"direction": "right"
+			},
+			{
+				"layout": "work",
+				"entries": [
+					{
+						"title": "Anomaly Brewing",
+						"description": "<p><strong>Anomaly Brewing</strong> is an independent, small-batch brewery driven by a passionate in-house team of expert brewers. Specialising in crafting innovative and experimental beers inspired by traditional recipes, the brewery pushes the boundaries of flavour while honouring time-honoured brewing techniques.  </p>\n\n<p>Initially supplying local shops and pubs, Anomaly Brewing sought to broaden its reach by launching an online store, making its unique creations more accessible to a wider audience.  </p>\n\n<p>To reflect the brand’s identity, the website has been thoughtfully designed to showcase each product in a way that captures attention and highlights its distinct character. The clean, minimalist design not only enhances visual appeal but also ensures a seamless user experience. At the core of the UX strategy is a streamlined purchasing process, enabling customers to complete transactions with minimal steps. This intuitive approach reduces friction, minimises drop-off rates, and maximises conversions, allowing beer enthusiasts to explore and purchase with ease.</p>\n",
+						"image": {
+							"alt": "Anomaly Brewing website preview",
+							"url": "https://www.datocms-assets.com/154322/1741871658-anomaly-brewing-website-preview.jpg"
+						},
+						"link": {
+							"label": "anomalybrewing.co.uk",
+							"text": "anomalybrewing.co.uk",
+							"type": "external",
+							"url": "https://anomaly-brewing-site.vercel.app/",
+							"target": "_blank"
+						},
+						"categories": [
+							{
+								"category": "Design"
+							},
+							{
+								"category": "UI/UX"
+							},
+							{
+								"category": "Vue.js"
+							},
+							{
+								"category": "Node.js"
+							},
+							{
+								"category": "E-commerce"
+							}
+						],
+						"muxPlaybackId": "opXGQOpVctncwDA1zTWxNAXddIHg7RJFNIFLpQGq5xQ",
+						"vimeo": "https://player.vimeo.com/video/1066339656?h=fec94d3d9f"
+					},
+					{
+						"title": "Wild",
+						"description": "<p><strong>Wild</strong> has been developed following the JAMstack architecture, ensuring a modern, high-performance foundation that supports future scalability and flexibility as the company grows. By leveraging this approach, the site benefits from improved speed, enhanced security, and a more efficient content delivery system. This architecture also allows for seamless integrations with third-party services and provides the agility needed to implement new features or updates without compromising performance.</p>\n\n<p>The design of the website has been carefully crafted to guide users towards choosing a subscription-based service. This strategic approach not only enhances customer retention but also ensures a steady revenue stream for the business. The layout, messaging, and user flow have been optimised to make the subscription model an appealing and convenient choice for visitors. Clear call-to-action buttons, persuasive content, and a smooth checkout experience work together to encourage conversions while maintaining a user-friendly experience.</p>\n\n<p>To facilitate this, the Shopify SDK has been seamlessly integrated into the platform, providing a robust e-commerce solution that supports subscription management with ease. This integration enables a secure and efficient purchasing process, allowing customers to manage their subscriptions effortlessly. The combination of JAMstack technology and Shopify’s powerful toolkit ensures a scalable and future-proof system that can evolve alongside the brand’s ambitions.</p>\n",
+						"image": {
+							"alt": "Wild website preview",
+							"url": "https://www.datocms-assets.com/154322/1741880984-wild-website-preview.jpg"
+						},
+						"link": {
+							"label": "www.wearewild.com",
+							"text": "www.wearewild.com",
+							"type": "external",
+							"url": "https://wearewild.com/",
+							"target": "_blank"
+						},
+						"categories": [
+							{
+								"category": "Vue.js"
+							},
+							{
+								"category": "Node.js"
+							},
+							{
+								"category": "Headless"
+							},
+							{
+								"category": "E-commerce"
+							}
+						],
+						"muxPlaybackId": "bf0224wGkQrz00UU9zp017MIKLCc573Tkhr1afsM4kncY00",
+						"vimeo": "https://player.vimeo.com/video/1066363156?h=1eadcdf7ff"
+					},
+					{
+						"title": "Big Green Egg",
+						"description": "<p><strong>Big Green Egg</strong> sought to create a new website tailored specifically for their UK consumers, providing a seamless and engaging digital experience. To achieve this, we implemented a cutting-edge solution built on modern JavaScript architecture, ensuring high performance, flexibility, and scalability. By adopting a headless approach for both e-commerce and content management, we empowered the brand with a platform that could adapt and grow alongside their business needs.</p>\n\n<p>This architecture allowed for a fully decoupled front-end experience, enabling faster load times, smoother interactions, and a more dynamic user journey. With a headless CMS in place, Big Green Egg gained complete control over their content, making it easy to manage product listings, promotional campaigns, and editorial content without relying on developers for every update. Meanwhile, the headless e-commerce solution provided the flexibility to integrate seamlessly with various third-party tools and services, optimising the checkout experience and overall site functionality.</p>\n\n<p>The results were transformative. The new platform significantly boosted conversion rates, enhancing both user engagement and sales performance. As Big Green Egg continues to evolve, the website remains a future-proof foundation that can scale effortlessly to meet the demands of an ever-growing customer base. With ongoing refinements and enhancements, the site not only supports the company’s current objectives but also positions it for long-term digital success.</p>\n",
+						"image": {
+							"alt": "Big Green Egg website preview",
+							"url": "https://www.datocms-assets.com/154322/1741881167-big-green-egg-website-preview.png"
+						},
+						"link": {
+							"label": "www.biggreenegg.co.uk",
+							"text": "www.biggreenegg.co.uk",
+							"type": "external",
+							"url": "https://www.biggreenegg.co.uk/",
+							"target": "_blank"
+						},
+						"categories": [
+							{
+								"category": "Vue.js"
+							},
+							{
+								"category": "Node.js"
+							},
+							{
+								"category": "Headless"
+							},
+							{
+								"category": "E-commerce"
+							}
+						],
+						"muxPlaybackId": "bc8AGsNQWJFGlLlfbr1vjmpiWAabk3VnVDd3NAcCdX4",
+						"vimeo": "https://player.vimeo.com/video/1066364276?h=6892d99106"
+					},
+					{
+						"title": "Della Vite",
+						"description": "<p>Founded in 2020 by the Delevingne sisters, <strong>Della Vite</strong> set out to create an e-commerce platform that seamlessly aligned with the brand’s premium identity and modern aesthetic. Given the marketing momentum driven by their strong social media presence, the website needed to be both visually compelling and architecturally robust, capable of handling high traffic volumes without compromising performance.</p>\n\n<p>To achieve this, the platform was developed using server-side rendered Vue.js, ensuring optimised first-paint performance, improved SEO, and enhanced scalability. By rendering content on the server before delivering it to the client, the site benefits from reduced time-to-interactive speeds, providing a near-instant browsing experience. This architecture not only ensures smooth performance under heavy load but also enables dynamic hydration, allowing Vue.js to seamlessly take over on the client side for enhanced interactivity and a fluid user experience.</p>\n\n<p>Additionally, the site architecture leverages client-side service handling to further refine the e-commerce journey. Key functionalities such as product filtering, cart updates, and personalised recommendations are executed efficiently within the browser, reducing server load while maintaining a responsive and engaging interface. This hybrid approach of SSR and client-side rendering creates an optimised balance between speed, usability, and scalability, ensuring a high-performance digital experience that evolves alongside the brand.</p>\n",
+						"image": {
+							"alt": "Della Vite website preview",
+							"url": "https://www.datocms-assets.com/154322/1741882080-della-vite-website-preview.jpg"
+						},
+						"link": {
+							"label": "www.dellavite.com",
+							"text": "www.dellavite.com",
+							"type": "external",
+							"url": "https://dellavite.com/uk",
+							"target": "_blank"
+						},
+						"categories": [
+							{
+								"category": "UI/UX"
+							},
+							{
+								"category": "Vue.js"
+							},
+							{
+								"category": "Node.js"
+							},
+							{
+								"category": "Headless"
+							},
+							{
+								"category": "E-commerce"
+							}
+						],
+						"muxPlaybackId": "95ZVLw49YN2Zu4pWhD83FTCnlINJf5cpMKg3tOyvthc",
+						"vimeo": "https://player.vimeo.com/video/1066363947?h=d82871d150"
+					},
+					{
+						"title": "Chilly's",
+						"description": "<p>As <strong>Chilly’s</strong> continued to grow as a brand, it required a robust and scalable digital platform to support its expansion and showcase the diversity of its product range. The goal was to develop an e-commerce experience that not only reflected the brand’s modern identity but also provided users with an intuitive and engaging way to explore its offerings.</p>\n\n<p>To achieve this, the website was built using a modern headless architecture combined with server-side rendered Vue.js, ensuring both high performance and flexibility. This approach allows for rapid content delivery, improved SEO, and enhanced scalability, making it well-suited to handle increasing traffic demands. By rendering pages on the server before serving them to users, the platform minimises load times while maintaining a smooth, interactive experience, essential for optimising conversion rates.</p>\n\n<p>Beyond performance, the headless setup provides Chilly’s with complete control over content management and seamless integration with third-party services such as payment gateways, inventory systems, and marketing tools. This decoupled architecture ensures the site can evolve alongside the brand, enabling the effortless addition of new features and product expansions. As a result, the platform has not only strengthened Chilly’s digital presence but has also played a key role in significantly increasing conversion rates, solidifying its position as a leader in the reusable products market.</p>\n",
+						"image": {
+							"alt": "Chilly's website preview",
+							"url": "https://www.datocms-assets.com/154322/1741881002-chillys-website-preview.jpg"
+						},
+						"link": null,
+						"categories": [
+							{
+								"category": "UI/UX"
+							},
+							{
+								"category": "Vue.js"
+							},
+							{
+								"category": "Node.js"
+							},
+							{
+								"category": "Headless"
+							},
+							{
+								"category": "E-commerce"
+							}
+						],
+						"muxPlaybackId": "mhRFPct00mNr8KrF6VNGL5DCt029w9oOGkT5jqCs5KjmQ",
+						"vimeo": "https://player.vimeo.com/video/1066364636?h=8a69ad7ce9"
+					},
+					{
+						"title": "Seedlip",
+						"description": "<p><strong>Seedlip</strong>, an innovative and premium non-alcoholic drinks brand, required a digital platform that embodied its refined identity and pioneering spirit. With a strong presence in the retail sector, the brand sought to expand into e-commerce, offering customers a seamless way to explore and purchase its products online. The challenge was to create a website that not only reflected Seedlip’s sophistication but also delivered a high-performance shopping experience.</p>\n\n<p>To achieve this, the platform was developed using a headless architecture, integrating Shopify’s SDK alongside a headless CMS. This approach provided the flexibility to craft a bespoke front-end experience while leveraging Shopify’s powerful e-commerce capabilities for secure transactions and streamlined order management. By decoupling the front-end from the e-commerce backend, we ensured faster load times, improved SEO, and greater scalability as the brand continued to grow.</p>\n\n<p>The result is an elegant, high-performance solution that balances aesthetics with functionality. The intuitive UX design guides users effortlessly through product discovery, while the headless architecture ensures seamless content management and adaptability.</p>\n",
+						"image": {
+							"alt": "Seedlip website preview",
+							"url": "https://www.datocms-assets.com/154322/1741880928-seedlip-website-preview.jpg"
+						},
+						"link": null,
+						"categories": [
+							{
+								"category": "Vue.js"
+							},
+							{
+								"category": "Node.js"
+							},
+							{
+								"category": "Headless"
+							},
+							{
+								"category": "E-commerce"
+							}
+						],
+						"muxPlaybackId": "X0002cRsK201IZp67ON00y7eiFeX01N2CIp2BJ3PrIgCrJGk",
+						"vimeo": "https://player.vimeo.com/video/1066364842?h=a00539d6b2"
+					}
+				]
+			},
+			{
+				"layout": "title",
+				"title": "Think",
+				"direction": "right"
+			},
+			{
+				"layout": "text",
+				"title": null,
+				"text": "<p>WIP: This section will be a collection of tutorials and articles. Disclaimer: the content below is placeholder <strong>AI SLOP!</strong> Real articles are on their way.</p>"
+			},
+			{
+				"layout": "masonry",
+				"items": [
+					{
+						"title": "Shipping headless without the chaos",
+						"text": "<p>A short field guide to decoupling commerce and content without turning the stack into a committee of APIs.</p>",
+						"body": "<p>Headless is powerful, but only when the boundaries are boring and explicit. This note walks through how I split storefront, CMS and checkout so teams can ship independently without weekend firefights.</p><p>Start with ownership: who owns product truth, who owns editorial, who owns cart state. Then pick the thinnest integration that keeps those contracts stable. Most “headless pain” is actually vague ownership dressed up as architecture.</p><p>I cover a practical checklist for launch: caching strategy, preview flows, fallback content, and the few metrics that tell you the platform is healthy before marketing turns the traffic dial.</p>",
+						"image": {
+							"alt": "Shipping headless without the chaos",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Shipping+headless+without+the+chaos"
+						}
+					},
+					{
+						"title": "Why SSR still matters",
+						"text": "<p>Client-only apps feel fast on your laptop. Real users meet cold caches, weak networks and SEO that quietly underperforms.</p>",
+						"body": "<p>Server-rendered Vue (or whatever your flavour) is not nostalgia, it is still the cheapest way to get a trustworthy first paint and crawlable content.</p><p>This tutorial looks at when SSR wins, when islands are enough, and how to avoid the classic trap of hydrating everything because “it might be interactive later.”</p><p>Includes a simple decision tree I use on marketing and commerce builds: render on the server until interactivity earns its keep.</p>",
+						"image": {
+							"alt": "Why SSR still matters",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Why+SSR+still+matters"
+						}
+					},
+					{
+						"title": "Scroll-driven UI that feels intentional",
+						"text": "<p>Motion should clarify hierarchy, not decorate every pixel. A few patterns that stay readable under real scroll behaviour.</p>",
+						"body": "<p>Scroll-linked animation is easy to overdo. I share the rules I stick to: one primary motion per section, velocity as accent not engine, and always a static fallback that still makes sense.</p><p>We walk through a ticker title, a restrained progress cue, and how to keep layout stable when images and fonts settle late.</p><p>Dummy content for now, the finished piece will include reduced-motion notes and a small performance budget for transform-heavy UIs.</p>",
+						"image": {
+							"alt": "Scroll-driven UI that feels intentional",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Scroll-driven+UI+that+feels+intentional"
+						}
+					},
+					{
+						"title": "Design systems that survive handoff",
+						"text": "<p>Tokens and components only help if the next team can find the decision, not just the stylesheet.</p>",
+						"body": "<p>A design system fails quietly when documentation lives in someone’s head. This thought is about naming, escape hatches, and documenting the “why” next to the “how.”</p><p>I outline a lightweight structure: foundations, primitives, patterns, and product-specific exceptions, plus the review questions I ask before adding another variant.</p><p>Placeholder copy for the long-form version; the intent is a practical handoff kit rather than another abstract manifesto.</p>",
+						"image": {
+							"alt": "Design systems that survive handoff",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Design+systems+that+survive+handoff"
+						}
+					},
+					{
+						"title": "AI in the workflow without losing craft",
+						"text": "<p>Using assistants to move faster is fine. Letting them invent architecture you cannot explain is not.</p>",
+						"body": "<p>I use AI as a sharp junior: great for drafts, refactors and exploration, never the source of truth for product decisions. This piece covers where it saves time on this site and where I still write every line by hand.</p><p>Topics include prompting for constraints, reviewing generated CSS against the design system, and keeping commits reviewable.</p><p>More of a working note than a finished essay, but the thesis is simple: speed is only useful if the craft still shows.</p>",
+						"image": {
+							"alt": "AI in the workflow without losing craft",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=AI+in+the+workflow+without+losing+craft"
+						}
+					},
+					{
+						"title": "Masonry that doesn’t jump",
+						"text": "<p>Absolute columns are lovely until images load and everything reflows. A few habits that keep the grid honest.</p>",
+						"body": "<p>Masonry layouts look effortless and then punish you with cumulative layout shift. This tutorial is about measuring heights after paint, listening for image load, and deciding when placeholders earn their keep.</p><p>We also look at responsive column counts without rebuilding the world on every resize, and how to keep keyboard focus order sensible when visual order is non-linear.</p><p>Yes, this section is eating its own dog food, dummy article for the full write-up.</p>",
+						"image": {
+							"alt": "Masonry that doesn’t jump",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Masonry+that+doesn%27t+jump"
+						}
+					},
+					{
+						"title": "Performance budgets for marketing sites",
+						"text": "<p>Pretty launches die on third-party scripts. Set a budget before the tag manager arrives with friends.</p>",
+						"body": "<p>Marketing sites are where performance culture goes to negotiate. This note is a template budget: JS weight, image strategy, font loading, and a hard list of “nice to have” scripts that can wait.</p><p>I include the conversations I have with stakeholders, framed around conversion, not Lighthouse ego, and a simple weekly check that catches regressions before they become “the site feels slow.”</p><p>Dummy long-form for now; the final version will ship with a sample spreadsheet and CI hook ideas.</p>",
+						"image": {
+							"alt": "Performance budgets for marketing sites",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Performance+budgets+for+marketing+sites"
+						}
+					},
+					{
+						"title": "Teaching juniors to ship confidently",
+						"text": "<p>Mentoring is less about answers and more about shrinking the blast radius of a first production change.</p>",
+						"body": "<p>The best onboarding I have seen pairs a tiny production path with clear review rituals. This thought collects habits that help juniors ship without inheriting fear: scoped tickets, paired deploys, and post-mortems that teach instead of blame.</p><p>Also: how to review PRs so the author leaves with a model, not just a list of nits, and when to let them struggle for an hour before pairing.</p><p>Placeholder tutorial content; tone is practical, not managerial.</p>",
+						"image": {
+							"alt": "Teaching juniors to ship confidently",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Teaching+juniors+to+ship+confidently"
+						}
+					}
+				]
+			},
+			{
+				"layout": "title",
+				"title": "repeat",
+				"direction": "left",
+				"color": "accent"
 			}
 		]
 	}

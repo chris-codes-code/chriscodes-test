@@ -1,9 +1,66 @@
 {
 	"title": "Home",
 	"hero": {
-		"title": "Creative Digital Agency"
+		"title": "Creative digital studio"
 	},
 	"content": [
+		{
+			"attrs": {
+				"title": "Content Title",
+				"direction": "left",
+				"level": "h2",
+				"color": null
+			},
+			"id": "title",
+			"component": "ContentTitle"
+		},
+		{
+			"attrs": {
+				"items": [
+					{
+						"id": "masonry-item-0",
+						"title": "Shipping headless without the chaos",
+						"text": "<p>A short field guide to decoupling commerce and content without turning the stack into a committee of APIs.</p>",
+						"body": "<p>Headless is powerful, but only when the boundaries are boring and explicit.</p><p>Dummy full article for the component library preview.</p>",
+						"image": {
+							"alt": "Abstract workspace preview",
+							"height": 800,
+							"objectPosition": "50% 50%",
+							"src": "https://www.datocms-assets.com/154322/1741871658-anomaly-brewing-website-preview.jpg",
+							"width": 1200
+						}
+					},
+					{
+						"id": "masonry-item-1",
+						"title": "Why SSR still matters",
+						"text": "<p>Client-only apps feel fast on your laptop. Real users meet cold caches and quiet SEO misses.</p>",
+						"body": "<p>Server-rendered pages still earn the first paint and crawlability.</p><p>Dummy full article for the component library preview.</p>",
+						"image": {
+							"alt": "Browser window preview",
+							"height": 800,
+							"objectPosition": "50% 50%",
+							"src": "https://www.datocms-assets.com/154322/1741880984-wild-website-preview.jpg",
+							"width": 1200
+						}
+					},
+					{
+						"id": "masonry-item-2",
+						"title": "Masonry that doesn’t jump",
+						"text": "<p>Absolute columns are lovely until images load and everything reflows.</p>",
+						"body": "<p>Measure after paint, listen for image load, keep focus order sensible.</p><p>Dummy full article for the component library preview.</p>",
+						"image": {
+							"alt": "Masonry grid preview",
+							"height": 800,
+							"objectPosition": "50% 50%",
+							"src": "https://www.datocms-assets.com/154322/1741880928-seedlip-website-preview.jpg",
+							"width": 1200
+						}
+					}
+				]
+			},
+			"id": "masonry",
+			"component": "ContentMasonry"
+		},
 		{
 			"attrs": {
 				"title": "Content Text",
