@@ -1,9 +1,14 @@
 const THEME_COOKIE = 'theme';
 const THEMES = ['light', 'dark'];
 
+const getDefaultTheme = () => {
+	const hour = new Date().getHours();
+	return hour >= 18 || hour < 6 ? 'dark' : 'light';
+};
+
 export function useTheme() {
 	const theme = useCookie(THEME_COOKIE, {
-		default: () => 'light',
+		default: getDefaultTheme,
 		maxAge: 60 * 60 * 24 * 365,
 		path: '/',
 		sameSite: 'lax',
