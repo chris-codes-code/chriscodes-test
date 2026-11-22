@@ -6,16 +6,17 @@ const TARGET_HEIGHT = 1.7;
 const MAX_LOOK_YAW = 0.32;
 const MAX_LOOK_PITCH = 0.14;
 
-export function createCursorCompanion(canvas) {
+export function createCursorCompanion(canvas, { onReady } = {}) {
 	let disposed = false;
 
 	const renderer = new THREE.WebGLRenderer({
 		alpha: true,
-		antialias: true,
+		antialias: false,
 		canvas,
+		powerPreference: 'high-performance',
 	});
 	renderer.setClearColor(0x000000, 0);
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
 
 	const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
 	const scene = new THREE.Scene();
@@ -27,7 +28,8 @@ export function createCursorCompanion(canvas) {
 	scene.add(keyLight);
 
 	let idle = null;
-	const clock = new THREE.Clock();
+	const timer = new THREE.Timer();
+	timer.connect(document);
 	let lookYaw = 0;
 	let lookPitch = 0;
 	let cursorYaw = 0;
@@ -114,7 +116,9 @@ export function createCursorCompanion(canvas) {
 			resize();
 
 			idle = createIdle(model);
+			renderer.compile(scene, camera);
 			canvas.dataset.ready = 'true';
+			onReady?.();
 		},
 		undefined,
 		(error) => {
@@ -122,27 +126,46 @@ export function createCursorCompanion(canvas) {
 		},
 	);
 
-	function animate() {
-		if (disposed) return;
+	let visible = true;
 
-		const delta = Math.min(clock.getDelta(), 0.05);
+	function animate(timestamp) {
+		if (disposed || !visible) return;
+
+		timer.update(timestamp);
+		const delta = Math.min(timer.getDelta(), 0.05);
 
 		const glanceAt = glanceTarget(performance.now() / 1000);
 		const easing = glance ? 2.3 : 5;
 
 		lookYaw = THREE.MathUtils.damp(lookYaw, glanceAt.yaw, easing, delta);
 		lookPitch = THREE.MathUtils.damp(lookPitch, glanceAt.pitch, easing, delta);
-		idle?.update(clock.elapsedTime, lookYaw, lookPitch);
+		idle?.update(timer.getElapsed(), lookYaw, lookPitch);
 
 		renderer.render(scene, camera);
 	}
 
-	renderer.setAnimationLoop(animate);
+	function setLoop(enabled) {
+		visible = enabled;
+		renderer.setAnimationLoop(enabled ? animate : null);
+		if (enabled) timer.update();
+	}
+
+	const intersectionObserver = new IntersectionObserver(
+		([entry]) => {
+			setLoop(Boolean(entry?.isIntersecting));
+		},
+		{ rootMargin: '50px', threshold: 0 },
+	);
+	intersectionObserver.observe(canvas);
+
+	setLoop(true);
 
 	return {
 		destroy() {
 			disposed = true;
-			renderer.setAnimationLoop(null);
+			setLoop(false);
+			timer.dispose();
+			intersectionObserver.disconnect();
 			resizeObserver.disconnect();
 			window.removeEventListener('pointermove', onPointerMove);
 			window.removeEventListener('pointerleave', onPointerLeave);
@@ -246,15 +269,15 @@ function pose(entry, x, y, z, euler, extra) {
 }
 
 function frameCamera(camera, width, height) {
-	const fraction = 0.42;
+	// Character height as a fraction of the canvas — keep a little headroom for idle motion
+	const fraction = 0.92;
 	const fov = THREE.MathUtils.degToRad(camera.fov);
 	const distance = TARGET_HEIGHT / (2 * Math.tan(fov / 2) * fraction);
-	const lookY = TARGET_HEIGHT * 0.55;
-	const visibleHeight = TARGET_HEIGHT / fraction;
-	const feetNdc = (0 - lookY) / (visibleHeight / 2);
-	const ndcShift = -1 + 0.09 - feetNdc;
+	const lookY = TARGET_HEIGHT * 0.5;
 
+	camera.clearViewOffset();
+	camera.aspect = width / Math.max(height, 1);
 	camera.position.set(0, lookY, distance);
 	camera.lookAt(0, lookY, 0);
-	camera.setViewOffset(width, height, 0, (ndcShift * height) / 2, width, height);
+	camera.updateProjectionMatrix();
 }
