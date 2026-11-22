@@ -26,6 +26,7 @@ export default defineNuxtConfig({
 				},
 			],
 			link: [
+				{ crossorigin: 'anonymous', href: 'https://stream.mux.com', rel: 'preconnect' },
 				{
 					as: 'font',
 					crossorigin: 'anonymous',
@@ -108,6 +109,8 @@ export default defineNuxtConfig({
 		},
 	},
 	runtimeConfig: {
+		emailAccountUsername: process.env.EMAIL_ACCOUNT_USERNAME || '',
+		emailAccountPassword: process.env.EMAIL_ACCOUNT_PASSWORD || '',
 		public: {
 			API_URL: process.env.API_URL,
 			CLOUDFLARE_TURNSTILE_SITE_KEY: process.env.CLOUDFLARE_TURNSTILE_SITE_KEY || '',
@@ -116,6 +119,12 @@ export default defineNuxtConfig({
 			SITE_URL: process.env.SITE_URL || '',
 			SSR_ENABLED: process.env.SSR_ENABLED,
 			STAGING_MODE: process.env.STAGING_MODE,
+		},
+	},
+
+	vue: {
+		compilerOptions: {
+			isCustomElement: (tag) => tag === 'mux-player',
 		},
 	},
 });
