@@ -1,7 +1,7 @@
 import { getPagePath } from './page-paths.js';
 import { getAbsoluteImageURL } from './absolute-image-url.js';
 
-const SITE_NAME = 'Chris Codes Launch Kit';
+const SITE_NAME = 'EAT ✱ SLEEP ✱ CREATE ✱ REPEAT';
 
 const siteBase = (siteUrl) => {
 	const base = typeof siteUrl === 'string' ? siteUrl.replace(/\/$/, '') : '';
