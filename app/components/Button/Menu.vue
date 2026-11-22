@@ -1,9 +1,5 @@
 <script setup>
-	const { isMenuOpen, setMenuOpen } = useModal();
-
-	const toggleMenu = () => {
-		setMenuOpen(!isMenuOpen.value);
-	};
+	const { isMenuOpen, toggleMenu } = useModal();
 
 	const label = computed(() => (isMenuOpen.value ? 'Close menu' : 'Open menu'));
 </script>

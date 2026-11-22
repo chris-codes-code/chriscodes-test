@@ -1,4 +1,6 @@
 <script setup>
+	import { isNavLinkActive } from '~/utils/is-nav-link-active';
+
 	const route = useRoute();
 
 	defineProps({
@@ -22,7 +24,7 @@
 				<PrimitiveLink
 					v-bind="link"
 					class="CoreNavigationDesktop__link"
-					:active="route.path === link.url"
+					:active="isNavLinkActive(link, route)"
 				>
 					<StyleUILink :text="link.text" />
 				</PrimitiveLink>

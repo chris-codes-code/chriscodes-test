@@ -1,7 +1,10 @@
 <script setup>
+	import { scrollToTop } from '~/assets/animations/utils/scroll-to-anchor';
+
 	const route = useRoute();
+	const router = useRouter();
 	const { isVisible, isSnap } = useCoreHeaderContext();
-	const { isMenuOpen } = useModal();
+	const { isHeaderPanelOpen, closeAll } = useModal();
 
 	defineProps({
 		links: {
@@ -10,10 +13,27 @@
 		},
 	});
 
+	watch(
+		() => route.fullPath,
+		() => closeAll(),
+	);
+
+	const onLogoClick = (event) => {
+		closeAll();
+
+		if (route.path !== '/') return;
+
+		event.preventDefault();
+
+		if (route.hash) router.push({ path: '/' });
+
+		scrollToTop();
+	};
+
 	const classObj = computed(() => ({
 		'CoreHeader--hidden': !isVisible.value,
 		'CoreHeader--snap': isSnap.value,
-		'CoreHeader--menu-open': isMenuOpen.value,
+		'CoreHeader--panel-open': isHeaderPanelOpen.value,
 	}));
 </script>
 
@@ -23,12 +43,6 @@
 		:class="classObj"
 	>
 		<div class="CoreHeader__main">
-			<!-- <CoreHeaderNotification
-				v-if="notification"
-				:link="notification.link"
-				:text="notification.text"
-			/> -->
-
 			<BlockContainer>
 				<div class="CoreHeader__container">
 					<div class="CoreHeader__island">
@@ -37,7 +51,15 @@
 							aria-hidden="true"
 						/>
 
-						<CoreHeaderMenu :links="links" />
+						<CoreHeaderPanel>
+							<template #menu>
+								<CoreHeaderMenu :links="links" />
+							</template>
+
+							<template #contact>
+								<CoreHeaderContact />
+							</template>
+						</CoreHeaderPanel>
 
 						<div class="CoreHeader__sections">
 							<div class="CoreHeader__section CoreHeader__section--start">
@@ -54,9 +76,9 @@
 
 							<div class="CoreHeader__section CoreHeader__section--center">
 								<PrimitiveLink
-									:disabled="route.path === '/'"
 									label="Home"
 									:url="'/'"
+									@click="onLogoClick"
 								>
 									<SVGIcon
 										class="CoreHeader__logo"
@@ -126,6 +148,7 @@
 			margin: 0 auto;
 			height: var(--core-header-container-height);
 			width: fit-content;
+			min-width: min(100%, 360px);
 			scale: var(--core-header-scale);
 			opacity: var(--core-header-opacity);
 			transform-origin: center;
@@ -151,12 +174,9 @@
 			height: var(--core-header-container-height);
 			max-width: 400px;
 			color: var(--theme-color-secondary);
-			/* backdrop-filter: blur(8px);
-			-webkit-backdrop-filter: blur(8px);
-			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); */
 			transition: var(--theme-interactive-transition);
 
-			.CoreHeader--menu-open & {
+			.CoreHeader--panel-open & {
 				color: var(--theme-color-primary);
 			}
 		}
@@ -194,18 +214,10 @@
 		&__navigation {
 			&--mobile {
 				display: block;
-
-				/* @media (--screen-desktop) {
-					display: none;
-				} */
 			}
 
 			&--desktop {
 				display: none;
-
-				/* @media (--screen-desktop) {
-					display: block;
-				} */
 			}
 		}
 

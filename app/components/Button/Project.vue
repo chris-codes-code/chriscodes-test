@@ -1,7 +1,15 @@
+<script setup>
+	const { isContactOpen, toggleContact } = useModal();
+
+	const label = computed(() => (isContactOpen.value ? 'Close contact' : "Let's talk"));
+</script>
+
 <template>
 	<PrimitiveButton
 		class="ButtonProject"
-		label="Let's talk"
+		:active="isContactOpen"
+		:label="label"
+		@click="toggleContact"
 	>
 		<StyleUIButtonIcon text>
 			<span class="ButtonProject__label">

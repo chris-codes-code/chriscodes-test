@@ -44,24 +44,16 @@
 		}
 
 		button:focus-visible &,
-		a:focus-visible & {
+		a:focus-visible &,
+		button[data-active='true'] &,
+		a[data-active='true'] & {
 			background-color: var(--style-ui-button-icon-hover);
-		}
-
-		button[data-active='true']:focus-visible &,
-		a[data-active='true']:focus-visible & {
-			background-color: var(--style-ui-button-icon-hover-active);
 		}
 
 		@media (hover: hover) and (pointer: fine) {
 			button:hover &,
 			a:hover & {
 				background-color: var(--style-ui-button-icon-hover);
-			}
-
-			button[data-active='true']:hover &,
-			a[data-active='true']:hover & {
-				background-color: var(--style-ui-button-icon-hover-active);
 			}
 		}
 	}

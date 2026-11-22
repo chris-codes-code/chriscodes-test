@@ -4,7 +4,7 @@
 	const { navigation, notification } = await useSiteContent();
 	const isDev = import.meta.dev;
 	const { theme } = useTheme();
-	const { isMenuOpen, setMenuOpen } = useModal();
+	const { isHeaderPanelOpen, closeAll } = useModal();
 
 	useHead(() => ({
 		bodyAttrs: {
@@ -21,10 +21,10 @@
 	}));
 
 	const layoutClass = computed(() => ({
-		'Layout--menu-open': isMenuOpen.value,
+		'Layout--panel-open': isHeaderPanelOpen.value,
 	}));
 
-	watch(isMenuOpen, (isOpen) => {
+	watch(isHeaderPanelOpen, (isOpen) => {
 		if (!import.meta.client) return;
 
 		if (isOpen) lockBodyScroll();
@@ -32,7 +32,7 @@
 	});
 
 	onBeforeUnmount(() => {
-		if (isMenuOpen.value) unlockBodyScroll();
+		if (isHeaderPanelOpen.value) unlockBodyScroll();
 	});
 </script>
 
@@ -63,17 +63,17 @@
 				<slot />
 			</main>
 
-			<div class="Layout__footer">
+			<!-- <div class="Layout__footer">
 				<CoreFooter />
-			</div>
+			</div> -->
 		</div>
 
-		<CharacterCompanion />
+		<!-- <CharacterCompanion /> -->
 
 		<div
 			class="Layout__menuScrim"
-			:class="{ 'Layout__menuScrim--open': isMenuOpen }"
-			@click="setMenuOpen(false)"
+			:class="{ 'Layout__menuScrim--open': isHeaderPanelOpen }"
+			@click="closeAll"
 		/>
 
 		<div
@@ -102,7 +102,7 @@
 				position: sticky;
 			}
 
-			.Layout--menu-open & {
+			.Layout--panel-open & {
 				z-index: 28;
 			}
 		}
