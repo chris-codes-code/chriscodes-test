@@ -1,6 +1,6 @@
 export function useScrollVisibility({
 	getActivationDistance = () => 0,
-	showThreshold = 250,
+	showThreshold = 10,
 	enableSticky = true,
 	isActive = () => true,
 	scrollActionDisabled = null,
@@ -25,14 +25,20 @@ export function useScrollVisibility({
 		onHide?.({ snap });
 	};
 
+	const getScrollY = () => window.scrollY;
+
 	const updateSticky = () => {
 		if (!enableSticky) return;
 
-		if (window.scrollY <= 0) isSticky.value = false;
-		else if (window.scrollY > getActivationDistance()) isSticky.value = true;
+		const scrollY = getScrollY();
+
+		if (scrollY <= 0) isSticky.value = false;
+		else if (scrollY > getActivationDistance()) isSticky.value = true;
 	};
 
 	const updateVisibility = () => {
+		const scrollY = getScrollY();
+
 		if (!isActive()) {
 			scrollUpStartY = null;
 			wasActive = false;
@@ -43,8 +49,8 @@ export function useScrollVisibility({
 		const justBecameActive = !wasActive;
 		wasActive = true;
 
-		const scrollingDown = window.scrollY > previousScrollY;
-		const pastActivation = window.scrollY > getActivationDistance();
+		const scrollingDown = scrollY > previousScrollY;
+		const pastActivation = scrollY > getActivationDistance();
 
 		if (!pastActivation) {
 			scrollUpStartY = null;
@@ -65,31 +71,46 @@ export function useScrollVisibility({
 			return;
 		}
 
-		if (scrollUpStartY === null) scrollUpStartY = window.scrollY;
+		if (scrollUpStartY === null) scrollUpStartY = scrollY;
 
-		if (scrollUpStartY - window.scrollY >= showThreshold) {
+		if (scrollUpStartY - scrollY >= showThreshold) {
 			scrollUpStartY = null;
 			show();
 		}
 	};
 
 	const handleScroll = () => {
-		if (scrollActionDisabled?.value && window.scrollY !== 0) return;
+		const scrollY = getScrollY();
+
+		if (scrollActionDisabled?.value && scrollY !== 0) return;
 
 		updateSticky();
 		updateVisibility();
 		wasSticky = isSticky.value;
-		previousScrollY = window.scrollY;
+		previousScrollY = scrollY;
 	};
 
+	const handleLenisScroll = () => {
+		handleScroll();
+	};
+
+	let lenis = null;
+
 	const bind = () => {
-		previousScrollY = window.scrollY;
+		previousScrollY = getScrollY();
 		updateSticky();
 		wasSticky = isSticky.value;
-		window.addEventListener('scroll', handleScroll, { passive: true });
+
+		if (import.meta.client) {
+			lenis = useLenis();
+		}
+
+		if (lenis) lenis.on('scroll', handleLenisScroll);
+		else window.addEventListener('scroll', handleScroll, { passive: true });
 	};
 
 	const unbind = () => {
+		lenis?.off('scroll', handleLenisScroll);
 		window.removeEventListener('scroll', handleScroll, { passive: true });
 	};
 
