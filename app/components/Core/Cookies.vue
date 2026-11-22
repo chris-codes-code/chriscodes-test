@@ -87,8 +87,8 @@
 
 		&__content {
 			padding: var(--space-lg);
-			padding: 40px;
-			/* padding: 25px; */
+			/* padding: 40px;
+			padding: 25px; */
 		}
 
 		&__title {
