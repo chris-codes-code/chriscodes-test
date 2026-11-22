@@ -1,6 +1,9 @@
 import { accordionContentModel } from './accordion.js';
 import { imageContentModel } from './image.js';
+import { masonryContentModel } from './masonry.js';
 import { textContentModel } from './text.js';
+import { titleContentModel } from './title.js';
+import { workContentModel } from './work.js';
 
 const contentMapperModel = (attrs, id, component) => ({
 	attrs,
@@ -11,7 +14,10 @@ const contentMapperModel = (attrs, id, component) => ({
 const contentMapper = {
 	accordion: (entry) => contentMapperModel(accordionContentModel(entry), 'accordion', 'ContentAccordion'),
 	image: (entry) => contentMapperModel(imageContentModel(entry), 'image', 'ContentImage'),
+	masonry: (entry) => contentMapperModel(masonryContentModel(entry), 'masonry', 'ContentMasonry'),
 	text: (entry) => contentMapperModel(textContentModel(entry), 'text', 'ContentText'),
+	title: (entry) => contentMapperModel(titleContentModel(entry), 'title', 'ContentTitle'),
+	work: (entry) => contentMapperModel(workContentModel(entry), 'work', 'ContentWork'),
 };
 
 const getContentModel = (content) => {
