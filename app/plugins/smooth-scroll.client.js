@@ -3,10 +3,10 @@ import 'lenis/dist/lenis.css';
 
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
 import { setLenis } from '~/assets/animations/utils/lenis-store';
-import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 export default defineNuxtPlugin(() => {
-	if (prefersReducedMotion()) {
+	if (prefersReducedMotion() || prefersNativeScroll()) {
 		setLenis(null);
 
 		return {

@@ -113,7 +113,7 @@ out: (element) => {
 
 ## Smooth scroll
 
-Lenis is initialised in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger. Body scroll lock pauses Lenis. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
+Lenis is initialised in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger. It is skipped when the user prefers reduced motion or a coarse pointer (mobile/touch). Body scroll lock pauses Lenis. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
 
 ## Landing intro
 
