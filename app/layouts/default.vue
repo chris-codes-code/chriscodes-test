@@ -83,7 +83,7 @@
 			<DeveloperGrid v-if="isDev" />
 		</div>
 
-		<CoreCookies />
+		<!-- <CoreCookies /> -->
 	</div>
 </template>
 
