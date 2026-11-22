@@ -5,39 +5,46 @@
 			type: String,
 		},
 	});
+
+	const showScroller = true;
 </script>
 
 <template>
-	<div class="Hero">
+	<HeroScroller v-if="showScroller" />
+
+	<div
+		v-else
+		class="Hero"
+	>
 		<div class="Hero__content">
 			<div class="Hero__title-container">
-				<BlockContainer>
-					<div class="Hero__content-container">
-						<!-- <span class="Hero__text type-body type-body--lg"> We are a </span> -->
+				<div class="Hero__content-container">
+					<!-- <span class="Hero__text type-body type-body--lg"> We are a </span> -->
 
-						<!-- <span /> -->
+					<!-- <span /> -->
 
-						<h1
-							v-if="title"
-							class="Hero__title"
-						>
-							<StyleTextClip>{{ title }}</StyleTextClip>
-						</h1>
+					<h1
+						v-if="title"
+						class="Hero__title"
+					>
+						<StyleTextClip>{{ title }}</StyleTextClip>
+					</h1>
 
-						<h1
-							v-else
-							class="Hero__title"
-						>
-							Creative Digital Agency
-							<!-- <StyleTextClip>Creative Digital Agency</StyleTextClip> -->
-						</h1>
+					<h1
+						v-else
+						class="Hero__title"
+					>
+						<!-- Digital studio -->
+						<!-- Creative engineer -->
+						<StyleTextClip>Creative engineer</StyleTextClip>
+						<!-- <StyleTextClip>Creative Digital Agency</StyleTextClip> -->
+					</h1>
 
-						<p class="Hero__text type-body type-body--lg">
-							lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Quisquam, quos.
-						</p>
-					</div>
-				</BlockContainer>
+					<!-- <p class="Hero__text type-body type-body--lga">
+						lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet
+						consectetur adipisicing elit. Quisquam, quos.
+					</p> -->
+				</div>
 			</div>
 		</div>
 	</div>
@@ -55,7 +62,7 @@
 		margin-top: calc(var(--core-header-height) * -1);
 		/* background-color: var(--color-accent); */
 
-		/* &::before {
+		&::before {
 			content: '';
 			position: absolute;
 			z-index: 0;
@@ -71,7 +78,7 @@
 		> * {
 			position: relative;
 			z-index: 1;
-		} */
+		}
 
 		&__content {
 			display: grid;
@@ -96,16 +103,22 @@
 			align-items: center;
 			justify-content: center;
 			padding-top: calc(var(--core-header-height) * 1);
+			/* padding-bottom: 30px; */
 		}
 
 		&__title {
 			font-size: 8vw;
+			/* font-size: calc(50vh - var(--core-header-height) * 2); */
 			/* transform: translateY(-5%); */
 			/* color: var(--color-accent); */
+			white-space: nowrap;
+			overflow: hidden;
+			/* line-height: 1.1; */
 		}
 
 		&__text {
-			font-size: 1vw;
+			/* font-size: 1vw; */
+			font-size: 18px;
 			max-width: 40ch;
 			margin: 0 auto;
 			/* margin-top: 1em; */
