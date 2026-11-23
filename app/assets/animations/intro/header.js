@@ -2,6 +2,7 @@ import { config } from '~/assets/animations/config';
 import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
 import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+import { demote, gpu, promote, willChange } from '~/assets/animations/utils/scroll-reveal.js';
 
 const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
@@ -28,9 +29,13 @@ const animateHeaderIntro = {
 
 		let timeline = null;
 		let safetyTimer = 0;
+		let cancelled = false;
 
 		const context = gsap.context(() => {
+			promote(element);
 			gsap.set(element, {
+				...gpu,
+				willChange,
 				autoAlpha: 0,
 				y: -16,
 				scale: 0.96,
@@ -40,6 +45,7 @@ const animateHeaderIntro = {
 
 			if (headerParts.length) {
 				gsap.set(headerParts, {
+					...gpu,
 					autoAlpha: 0,
 					y: 8,
 				});
@@ -52,9 +58,8 @@ const animateHeaderIntro = {
 				finished = true;
 				window.clearTimeout(safetyTimer);
 
-				// Drop the FOUC hold before clearing inline props so the island
-				// doesn't flash hidden for a frame.
 				document.documentElement.setAttribute('data-header-intro', 'ready');
+				demote(element);
 
 				gsap.set(element, {
 					clearProps: 'opacity,visibility,transform,filter,scale',
@@ -70,8 +75,10 @@ const animateHeaderIntro = {
 			};
 
 			timeline = gsap.timeline({
+				paused: true,
 				defaults: {
 					ease: config.ease.intro,
+					...gpu,
 				},
 				onComplete: finish,
 			});
@@ -107,10 +114,23 @@ const animateHeaderIntro = {
 				);
 			}
 
-			gsap.ticker.wake();
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					if (cancelled) return;
+					gsap.ticker.wake();
+					timeline.play(0);
+				});
+			});
 		}, element);
 
-		setInstance(element, { context, safetyTimer, timeline });
+		setInstance(element, {
+			context,
+			safetyTimer,
+			timeline,
+			cancel: () => {
+				cancelled = true;
+			},
+		});
 	},
 
 	cleanup: (element) => {
@@ -119,6 +139,7 @@ const animateHeaderIntro = {
 		document.documentElement.setAttribute('data-header-intro', 'ready');
 
 		const instance = getInstance(element);
+		instance?.cancel?.();
 		window.clearTimeout(instance?.safetyTimer);
 		instance?.timeline?.kill();
 		instance?.context?.revert();

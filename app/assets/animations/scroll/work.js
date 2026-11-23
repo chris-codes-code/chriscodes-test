@@ -1,5 +1,5 @@
 import { config } from '~/assets/animations/config';
-import { createScrollReveal, gpu, reveal } from '~/assets/animations/utils/scroll-reveal.js';
+import { createScrollReveal, demote, gpu, promote, reveal } from '~/assets/animations/utils/scroll-reveal.js';
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
 import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
@@ -51,6 +51,7 @@ const animateContentWork = {
 		instance.modalTween?.kill();
 
 		instance.context.add(() => {
+			promote(rows);
 			instance.modalTween = gsap.to(rows, {
 				...gpu,
 				opacity: 0,
@@ -76,6 +77,7 @@ const animateContentWork = {
 		instance.modalTween?.kill();
 
 		instance.context.add(() => {
+			promote(rows);
 			instance.modalTween = gsap.to(rows, {
 				...gpu,
 				...to,
@@ -83,6 +85,7 @@ const animateContentWork = {
 				ease: config.ease.reveal,
 				stagger: 0.1,
 				onComplete: () => {
+					demote(rows);
 					instance.scrollTween?.progress(1);
 					instance.scrollTween?.scrollTrigger?.enable();
 				},

@@ -54,10 +54,6 @@
 			height: 50vh;
 			isolation: isolate;
 
-			@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-				will-change: transform, opacity, filter, clip-path;
-			}
-
 			&--primary {
 				padding-top: var(--core-header-height);
 			}

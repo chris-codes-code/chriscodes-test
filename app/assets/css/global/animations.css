@@ -25,18 +25,50 @@
 
 	.HeroScroller__container,
 	.ContentMasonry__item,
-	.ContentWork__entries {
+	.ContentWork__entries,
+	.ContentTitle,
+	.ContentImage__column {
 		opacity: 0;
+		backface-visibility: hidden;
+		transform: translate3d(0, 0, 0);
+	}
+
+	/*
+	 * will-change only while waiting to animate — GSAP clears it after tweens settle.
+	 * Avoid leaving permanent will-change on every masonry/work item.
+	 */
+	.HeroScroller__container {
+		will-change: transform, opacity, filter, clip-path;
+	}
+
+	.ContentMasonry__item,
+	.ContentWork__entries,
+	.ContentTitle,
+	.ContentImage__column {
+		will-change: transform, opacity, filter;
 	}
 
 	[data-scroll-reveal='ready'] .HeroScroller__container,
 	[data-scroll-reveal='ready'] .ContentMasonry__item,
-	[data-scroll-reveal='ready'] .ContentWork__entries {
+	[data-scroll-reveal='ready'] .ContentWork__entries,
+	[data-scroll-reveal='ready'].ContentTitle,
+	[data-scroll-reveal='ready'] .ContentImage__column {
 		opacity: 1;
+	}
+
+	/* After ready, drop will-change on scroll targets until GSAP re-promotes on play. */
+	[data-scroll-reveal='ready'] .ContentMasonry__item,
+	[data-scroll-reveal='ready'] .ContentWork__entries,
+	[data-scroll-reveal='ready'].ContentTitle,
+	[data-scroll-reveal='ready'] .ContentImage__column {
+		will-change: auto;
 	}
 
 	html[data-header-intro='pending'] .CoreHeader__island {
 		opacity: 0;
 		visibility: hidden;
+		backface-visibility: hidden;
+		transform: translate3d(0, 0, 0);
+		will-change: transform, opacity, filter;
 	}
 }

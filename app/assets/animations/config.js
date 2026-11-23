@@ -22,8 +22,8 @@ const config = {
 		toggleActions: 'play none none reverse',
 	},
 	intro: {
-		titleDelay: 0.08,
-		secondaryDelay: 0.28,
+		titleDelay: 0,
+		secondaryDelay: 0.2,
 	},
 };
 

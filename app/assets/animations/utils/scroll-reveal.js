@@ -9,6 +9,18 @@ const gpu = {
 	backfaceVisibility: 'hidden',
 };
 
+const willChange = 'transform, opacity, filter';
+
+const promote = (targets) => {
+	const { gsap } = getGSAP();
+	gsap.set(targets, { ...gpu, willChange });
+};
+
+const demote = (targets) => {
+	const { gsap } = getGSAP();
+	gsap.set(targets, { willChange: 'auto' });
+};
+
 const scrollTriggerVars = (trigger, { start, end } = {}) => ({
 	trigger,
 	start: start ?? config.scroll.start,
@@ -18,7 +30,7 @@ const scrollTriggerVars = (trigger, { start, end } = {}) => ({
 
 /**
  * One-shot scroll reveal: optional from-state, then play on enter.
- * Keeps transform work on the GPU via force3D / backface-visibility.
+ * will-change is set for the tween and cleared when it settles either way.
  */
 const reveal = (
 	targets,
@@ -26,7 +38,8 @@ const reveal = (
 ) => {
 	const { gsap } = getGSAP();
 
-	if (from) gsap.set(targets, { ...gpu, ...from });
+	if (from) gsap.set(targets, { ...gpu, willChange, ...from });
+	else promote(targets);
 
 	return gsap.to(targets, {
 		...gpu,
@@ -34,6 +47,9 @@ const reveal = (
 		ease,
 		stagger,
 		...to,
+		onComplete: () => demote(targets),
+		onReverseComplete: () => demote(targets),
+		onStart: () => promote(targets),
 		scrollTrigger: scrollTriggerVars(trigger, { start, end }),
 	});
 };
@@ -73,4 +89,4 @@ const createScrollReveal = (setup) => {
 	};
 };
 
-export { createScrollReveal, gpu, reveal, scrollTriggerVars };
+export { createScrollReveal, demote, gpu, promote, reveal, scrollTriggerVars, willChange };

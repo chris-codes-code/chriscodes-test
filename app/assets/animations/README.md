@@ -8,7 +8,7 @@ Each module stores a `gsap.context()` ([docs](https://gsap.com/docs/v3/GSAP/gsap
 
 - `**getGSAP()**` — loads GSAP and plugins once on the client
 - **Instance store** — one WeakMap per module, keyed to the DOM element
-- `**scroll-reveal.js**` — lean `reveal()` + `createScrollReveal()` for scroll modules (force3D / backface)
+- `**scroll-reveal.js**` — lean `reveal()` + `createScrollReveal()` (force3D, backface, promote/demote `will-change`)
 - `**config.js**` — shared animation values
 
 ## How to use

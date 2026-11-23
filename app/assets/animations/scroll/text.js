@@ -1,5 +1,12 @@
 import { config } from '~/assets/animations/config';
-import { createScrollReveal, gpu, scrollTriggerVars } from '~/assets/animations/utils/scroll-reveal.js';
+import {
+	createScrollReveal,
+	demote,
+	gpu,
+	promote,
+	scrollTriggerVars,
+	willChange,
+} from '~/assets/animations/utils/scroll-reveal.js';
 
 const splitWords = (SplitText, node, className) =>
 	SplitText.create(node, {
@@ -33,12 +40,17 @@ const animateContentText = createScrollReveal((element, { gsap, SplitText }) => 
 
 	if (!groups.length) return;
 
+	const allWords = groups.flatMap(({ words }) => [...words]);
+
 	const timeline = gsap.timeline({
 		scrollTrigger: scrollTriggerVars(element),
+		onComplete: () => demote(allWords),
+		onReverseComplete: () => demote(allWords),
+		onStart: () => promote(allWords),
 	});
 
 	groups.forEach(({ words, from, stagger, at }) => {
-		gsap.set(words, { ...gpu, ...from });
+		gsap.set(words, { ...gpu, willChange, ...from });
 		timeline.to(
 			words,
 			{

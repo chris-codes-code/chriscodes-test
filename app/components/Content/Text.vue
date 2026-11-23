@@ -63,7 +63,7 @@
 
 		&__split-word {
 			display: inline-block;
-			will-change: transform, opacity, filter;
+			backface-visibility: hidden;
 		}
 	}
 </style>
