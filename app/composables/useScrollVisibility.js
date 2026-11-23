@@ -90,14 +90,27 @@ export function useScrollVisibility({
 		previousScrollY = scrollY;
 	};
 
+	const handleLenisScroll = () => {
+		handleScroll();
+	};
+
+	let lenis = null;
+
 	const bind = () => {
 		previousScrollY = getScrollY();
 		updateSticky();
 		wasSticky = isSticky.value;
-		window.addEventListener('scroll', handleScroll, { passive: true });
+
+		if (import.meta.client) {
+			lenis = useLenis();
+		}
+
+		if (lenis) lenis.on('scroll', handleLenisScroll);
+		else window.addEventListener('scroll', handleScroll, { passive: true });
 	};
 
 	const unbind = () => {
+		lenis?.off('scroll', handleLenisScroll);
 		window.removeEventListener('scroll', handleScroll, { passive: true });
 	};
 

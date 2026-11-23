@@ -71,6 +71,13 @@
 		energy = Math.min(energy + delta * IMPULSE, MAX_BOOST);
 	};
 
+	const onLenisScroll = (event) => {
+		const scrollY = event?.scroll ?? window.scrollY;
+		const delta = Math.abs(scrollY - lastScrollY);
+		lastScrollY = scrollY;
+		energy = Math.min(energy + delta * IMPULSE, MAX_BOOST);
+	};
+
 	const tick = () => {
 		energy *= DECAY;
 		if (energy < 0.001) energy = 0;
@@ -81,6 +88,8 @@
 
 		frame = requestAnimationFrame(tick);
 	};
+
+	let lenis = null;
 
 	onMounted(async () => {
 		await document.fonts.ready;
@@ -93,13 +102,18 @@
 
 		if (!reduceMotion) {
 			lastScrollY = window.scrollY;
-			window.addEventListener('scroll', onWindowScroll, { passive: true });
+			lenis = useLenis();
+
+			if (lenis) lenis.on('scroll', onLenisScroll);
+			else window.addEventListener('scroll', onWindowScroll, { passive: true });
+
 			frame = requestAnimationFrame(tick);
 		}
 	});
 
 	onUnmounted(() => {
 		observer?.disconnect();
+		lenis?.off('scroll', onLenisScroll);
 		window.removeEventListener('scroll', onWindowScroll);
 		cancelAnimationFrame(frame);
 	});

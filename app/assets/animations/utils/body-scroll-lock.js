@@ -1,3 +1,5 @@
+import { getLenis } from '~/assets/animations/utils/lenis-store';
+
 let activeScrollLocks = 0;
 
 const isBodyScrollLocked = () => activeScrollLocks > 0;
@@ -14,8 +16,11 @@ const lockBodyScroll = () => {
 
 	if (activeScrollLocks !== 1) return;
 
-	// Don't set overflow on html/body — it breaks sticky header + mobile scroll.
-	clearDocumentOverflowLock();
+	const lenis = getLenis();
+
+	// Pause Lenis only — never set overflow on html/body (breaks sticky + mobile).
+	if (lenis) lenis.stop();
+	else clearDocumentOverflowLock();
 };
 
 const unlockBodyScroll = () => {
@@ -23,6 +28,7 @@ const unlockBodyScroll = () => {
 
 	if (activeScrollLocks !== 0) return;
 
+	getLenis()?.start();
 	clearDocumentOverflowLock();
 };
 

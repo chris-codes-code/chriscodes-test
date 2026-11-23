@@ -109,11 +109,11 @@ out: (element) => {
 - `modal/` — modal animations
 - `scroll/` — ScrollTrigger intro/outro reveals (text, title, work, masonry, image, hero)
 - `ui/` — component animations
-- `utils/` — loader, instance store, body scroll lock, reduced-motion helper
+- `utils/` — loader, instance store, body scroll lock, Lenis store, reduced-motion helper
 
-## Scroll
+## Smooth scroll
 
-The site uses native document scrolling. GSAP ScrollTrigger drives reveal animations on fine-pointer devices; coarse-pointer / reduced-motion skips those tweens so content stays visible. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
+Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger on fine-pointer devices. Touch / reduced-motion keep native scrolling, and scroll-reveal GSAP tweens are skipped there so content stays visible. Body scroll lock pauses Lenis when present and never sets overflow on `html`/`body`. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
 
 ## Landing intro
 

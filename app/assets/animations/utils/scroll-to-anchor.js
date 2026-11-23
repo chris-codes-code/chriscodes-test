@@ -1,13 +1,34 @@
 import { setIsAnchorScrolling } from '~/assets/animations/utils/anchor-scroll-state';
+import { getLenis } from '~/assets/animations/utils/lenis-store';
 
 const animateScrollTo = (target, { offset = 0, immediate = false } = {}) => {
 	if (!import.meta.client) return false;
+
+	const lenis = getLenis();
 
 	setIsAnchorScrolling(true);
 
 	const finish = () => {
 		setIsAnchorScrolling(false);
 	};
+
+	if (lenis) {
+		if (lenis.isStopped) lenis.start();
+
+		lenis.scrollTo(target, {
+			offset,
+			immediate,
+			force: true,
+			duration: immediate ? undefined : 1.35,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			lock: !immediate,
+			onComplete: finish,
+		});
+
+		if (immediate) finish();
+
+		return true;
+	}
 
 	const top =
 		typeof target === 'number'

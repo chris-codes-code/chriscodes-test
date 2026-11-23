@@ -89,7 +89,10 @@
 					/>
 
 					<div class="ModalOverlay__container">
-						<div class="ModalOverlay__tray">
+						<div
+							class="ModalOverlay__tray"
+							data-lenis-prevent
+						>
 							<div class="ModalOverlay__sections">
 								<div class="ModalOverlay__section ModalOverlay__section--header">
 									<PrimitiveButton
