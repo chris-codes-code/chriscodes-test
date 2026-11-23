@@ -1,6 +1,6 @@
 <script setup>
 	import { scrollToTop } from '~/assets/animations/utils/scroll-to-anchor';
-	import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 	const route = useRoute();
 	const router = useRouter();
@@ -18,10 +18,10 @@
 	let headerIntro = null;
 	let introElement = null;
 
-	const skipIntro = import.meta.client && prefersReducedMotion();
+	// Touch: skip blur intro — keep the island visible immediately.
+	const skipIntro = import.meta.client && (prefersReducedMotion() || prefersNativeScroll());
 
 	if (import.meta.client) {
-		// Own FOUC hold — not tied to the hero landing timeline.
 		document.documentElement.setAttribute('data-header-intro', skipIntro ? 'ready' : 'pending');
 	}
 

@@ -38,7 +38,6 @@
 	.HeroScroller {
 		margin-top: calc(var(--core-header-height) * -1);
 		transform-origin: 50% 30%;
-		will-change: transform, opacity, filter;
 
 		&__region {
 			position: relative;
@@ -53,8 +52,11 @@
 			flex-direction: column;
 			justify-content: center;
 			height: 50vh;
-			will-change: transform, opacity, filter, clip-path;
 			isolation: isolate;
+
+			@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+				will-change: transform, opacity, filter, clip-path;
+			}
 
 			&--primary {
 				padding-top: var(--core-header-height);

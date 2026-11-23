@@ -14,22 +14,19 @@
 	}
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	/* Roots: hide until useScrollAnimation marks ready (set on the element in markup). */
+/*
+ * FOUC holds only on fine-pointer + motion.
+ * Coarse-pointer (touch) skips GSAP reveals — never hide content waiting on JS/Lenis.
+ */
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
 	[data-scroll-reveal]:not([data-scroll-reveal='ready']) {
 		opacity: 0;
 	}
 
-	/*
-	 * Inner GSAP targets: stay hidden even after the root is ready.
-	 * Skip path has no GSAP inline hold, so restore when the root is ready.
-	 */
 	.HeroScroller__container,
 	.ContentMasonry__item,
 	.ContentWork__entries {
 		opacity: 0;
-		backface-visibility: hidden;
-		transform: translate3d(0, 0, 0);
 	}
 
 	[data-scroll-reveal='ready'] .HeroScroller__container,
@@ -38,7 +35,6 @@
 		opacity: 1;
 	}
 
-	/* Header intro — independent of scroll reveals. */
 	html[data-header-intro='pending'] .CoreHeader__island {
 		opacity: 0;
 		visibility: hidden;
