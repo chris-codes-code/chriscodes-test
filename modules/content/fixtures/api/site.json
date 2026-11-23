@@ -3,34 +3,22 @@
 	"data": {
 		"navigation": [
 			{
-				"label": "Home",
-				"text": "Home",
+				"label": "About",
+				"text": "About",
 				"type": "internal",
-				"url": "/home"
+				"url": "/#about"
 			},
 			{
 				"label": "Work",
 				"text": "Work",
 				"type": "internal",
-				"url": "/work"
+				"url": "/#work"
 			},
 			{
-				"label": "Style Guide",
-				"text": "Style Guide",
+				"label": "Think",
+				"text": "Think",
 				"type": "internal",
-				"url": "/developer/style-guide"
-			},
-			{
-				"label": "Component Library",
-				"text": "Component Library",
-				"type": "internal",
-				"url": "/developer/component-library"
-			},
-			{
-				"label": "Content Components",
-				"text": "Content Components",
-				"type": "internal",
-				"url": "/developer/content-components"
+				"url": "/#think"
 			}
 		],
 		"seo": {

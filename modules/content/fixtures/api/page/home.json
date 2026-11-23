@@ -13,16 +13,19 @@
 		},
 		"content": [
 			{
+				"id": "about",
 				"layout": "text",
 				"title": null,
 				"text": "<p>Hi, I’m a full-stack engineer with 11 years of experience building scalable products. I specialise in front-end craft, headless architectures and modern JavaScript.</p><p>I also design processes that make it easy for people to contribute, help developers grow, and leave room to improve as we go. I care about shipping work that holds up in production, with accessibility, performance, scalability and maintainability in mind.</p><p>I lead delivery, mentor engineers, and work closely with designers and clients to turn complex ideas into software that lasts, using AI-assisted workflows alongside solid architecture to move quicker without cutting corners.</p>"
 			},
 			{
+				"id": "work",
 				"layout": "title",
 				"title": "work",
 				"direction": "right"
 			},
 			{
+				"id": "work-list",
 				"layout": "work",
 				"entries": [
 					{
@@ -211,93 +214,97 @@
 				]
 			},
 			{
+				"id": "think",
 				"layout": "title",
 				"title": "Think",
 				"direction": "right"
 			},
 			{
+				"id": "think-intro",
 				"layout": "text",
 				"title": null,
-				"text": "<p>WIP: This section will be a collection of tutorials and articles. Disclaimer: the content below is placeholder <strong>AI SLOP!</strong> Real articles are on their way.</p>"
+				"text": "<p>WIP: This section will be a collection of tutorials and articles. Disclaimer: the content below is placeholder. Real articles are on their way.</p>"
 			},
 			{
+				"id": "masonry",
 				"layout": "masonry",
 				"items": [
 					{
-						"title": "Shipping headless without the chaos",
-						"text": "<p>A short field guide to decoupling commerce and content without turning the stack into a committee of APIs.</p>",
-						"body": "<p>Headless is powerful, but only when the boundaries are boring and explicit. This note walks through how I split storefront, CMS and checkout so teams can ship independently without weekend firefights.</p><p>Start with ownership: who owns product truth, who owns editorial, who owns cart state. Then pick the thinnest integration that keeps those contracts stable. Most “headless pain” is actually vague ownership dressed up as architecture.</p><p>I cover a practical checklist for launch: caching strategy, preview flows, fallback content, and the few metrics that tell you the platform is healthy before marketing turns the traffic dial.</p>",
+						"title": "Article 1",
+						"text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+						"body": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
 						"image": {
-							"alt": "Shipping headless without the chaos",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Shipping+headless+without+the+chaos"
+							"alt": "Article 1",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+1"
 						}
 					},
 					{
-						"title": "Why SSR still matters",
-						"text": "<p>Client-only apps feel fast on your laptop. Real users meet cold caches, weak networks and SEO that quietly underperforms.</p>",
-						"body": "<p>Server-rendered Vue (or whatever your flavour) is not nostalgia, it is still the cheapest way to get a trustworthy first paint and crawlable content.</p><p>This tutorial looks at when SSR wins, when islands are enough, and how to avoid the classic trap of hydrating everything because “it might be interactive later.”</p><p>Includes a simple decision tree I use on marketing and commerce builds: render on the server until interactivity earns its keep.</p>",
+						"title": "Article 2",
+						"text": "<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>",
+						"body": "<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p><p>Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.</p><p>Quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>",
 						"image": {
-							"alt": "Why SSR still matters",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Why+SSR+still+matters"
+							"alt": "Article 2",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+2"
 						}
 					},
 					{
-						"title": "Scroll-driven UI that feels intentional",
-						"text": "<p>Motion should clarify hierarchy, not decorate every pixel. A few patterns that stay readable under real scroll behaviour.</p>",
-						"body": "<p>Scroll-linked animation is easy to overdo. I share the rules I stick to: one primary motion per section, velocity as accent not engine, and always a static fallback that still makes sense.</p><p>We walk through a ticker title, a restrained progress cue, and how to keep layout stable when images and fonts settle late.</p><p>Dummy content for now, the finished piece will include reduced-motion notes and a small performance budget for transform-heavy UIs.</p>",
+						"title": "Article 3",
+						"text": "<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.</p>",
+						"body": "<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p><p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>",
 						"image": {
-							"alt": "Scroll-driven UI that feels intentional",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Scroll-driven+UI+that+feels+intentional"
+							"alt": "Article 3",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+3"
 						}
 					},
 					{
-						"title": "Design systems that survive handoff",
-						"text": "<p>Tokens and components only help if the next team can find the decision, not just the stylesheet.</p>",
-						"body": "<p>A design system fails quietly when documentation lives in someone’s head. This thought is about naming, escape hatches, and documenting the “why” next to the “how.”</p><p>I outline a lightweight structure: foundations, primitives, patterns, and product-specific exceptions, plus the review questions I ask before adding another variant.</p><p>Placeholder copy for the long-form version; the intent is a practical handoff kit rather than another abstract manifesto.</p>",
+						"title": "Article 4",
+						"text": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>",
+						"body": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p><p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p><p>Nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>",
 						"image": {
-							"alt": "Design systems that survive handoff",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Design+systems+that+survive+handoff"
+							"alt": "Article 4",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+4"
 						}
 					},
 					{
-						"title": "AI in the workflow without losing craft",
-						"text": "<p>Using assistants to move faster is fine. Letting them invent architecture you cannot explain is not.</p>",
-						"body": "<p>I use AI as a sharp junior: great for drafts, refactors and exploration, never the source of truth for product decisions. This piece covers where it saves time on this site and where I still write every line by hand.</p><p>Topics include prompting for constraints, reviewing generated CSS against the design system, and keeping commits reviewable.</p><p>More of a working note than a finished essay, but the thesis is simple: speed is only useful if the craft still shows.</p>",
+						"title": "Article 5",
+						"text": "<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>",
+						"body": "<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p><p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p><p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est.</p>",
 						"image": {
-							"alt": "AI in the workflow without losing craft",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=AI+in+the+workflow+without+losing+craft"
+							"alt": "Article 5",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+5"
 						}
 					},
 					{
-						"title": "Masonry that doesn’t jump",
-						"text": "<p>Absolute columns are lovely until images load and everything reflows. A few habits that keep the grid honest.</p>",
-						"body": "<p>Masonry layouts look effortless and then punish you with cumulative layout shift. This tutorial is about measuring heights after paint, listening for image load, and deciding when placeholders earn their keep.</p><p>We also look at responsive column counts without rebuilding the world on every resize, and how to keep keyboard focus order sensible when visual order is non-linear.</p><p>Yes, this section is eating its own dog food, dummy article for the full write-up.</p>",
+						"title": "Article 6",
+						"text": "<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.</p>",
+						"body": "<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p><p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>",
 						"image": {
-							"alt": "Masonry that doesn’t jump",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Masonry+that+doesn%27t+jump"
+							"alt": "Article 6",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+6"
 						}
 					},
 					{
-						"title": "Performance budgets for marketing sites",
-						"text": "<p>Pretty launches die on third-party scripts. Set a budget before the tag manager arrives with friends.</p>",
-						"body": "<p>Marketing sites are where performance culture goes to negotiate. This note is a template budget: JS weight, image strategy, font loading, and a hard list of “nice to have” scripts that can wait.</p><p>I include the conversations I have with stakeholders, framed around conversion, not Lighthouse ego, and a simple weekly check that catches regressions before they become “the site feels slow.”</p><p>Dummy long-form for now; the final version will ship with a sample spreadsheet and CI hook ideas.</p>",
+						"title": "Article 7",
+						"text": "<p>Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>",
+						"body": "<p>Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p><p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p><p>Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>",
 						"image": {
-							"alt": "Performance budgets for marketing sites",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Performance+budgets+for+marketing+sites"
+							"alt": "Article 7",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+7"
 						}
 					},
 					{
-						"title": "Teaching juniors to ship confidently",
-						"text": "<p>Mentoring is less about answers and more about shrinking the blast radius of a first production change.</p>",
-						"body": "<p>The best onboarding I have seen pairs a tiny production path with clear review rituals. This thought collects habits that help juniors ship without inheriting fear: scoped tickets, paired deploys, and post-mortems that teach instead of blame.</p><p>Also: how to review PRs so the author leaves with a model, not just a list of nits, and when to let them struggle for an hour before pairing.</p><p>Placeholder tutorial content; tone is practical, not managerial.</p>",
+						"title": "Article 8",
+						"text": "<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut.</p>",
+						"body": "<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p><p>Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p><p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.</p>",
 						"image": {
-							"alt": "Teaching juniors to ship confidently",
-							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Teaching+juniors+to+ship+confidently"
+							"alt": "Article 8",
+							"url": "https://placehold.co/1200x800/FFFFFF/000000/png?text=Article+8"
 						}
 					}
 				]
 			},
 			{
+				"id": "repeat",
 				"layout": "title",
 				"title": "repeat",
 				"direction": "left",
