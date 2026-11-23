@@ -6,7 +6,7 @@ const TARGET_HEIGHT = 1.7;
 const MAX_LOOK_YAW = 0.32;
 const MAX_LOOK_PITCH = 0.14;
 
-export function createCursorCompanion(canvas, { onReady } = {}) {
+export function createCursorCompanion(canvas, { onReady, trackPointer = true } = {}) {
 	let disposed = false;
 
 	const renderer = new THREE.WebGLRenderer({
@@ -16,7 +16,8 @@ export function createCursorCompanion(canvas, { onReady } = {}) {
 		powerPreference: 'high-performance',
 	});
 	renderer.setClearColor(0x000000, 0);
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
+	// Touch devices: keep pixel ratio lower — the GLB/WebGL cost dominates anyway.
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, trackPointer ? 1.25 : 1));
 
 	const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
 	const scene = new THREE.Scene();
@@ -70,6 +71,8 @@ export function createCursorCompanion(canvas, { onReady } = {}) {
 	}
 
 	function glanceTarget(now) {
+		if (!trackPointer) return { yaw: 0, pitch: 0 };
+
 		if (now - lastMoveAt < stillDelay) return { yaw: cursorYaw, pitch: cursorPitch };
 
 		if (!glance) {
@@ -89,8 +92,10 @@ export function createCursorCompanion(canvas, { onReady } = {}) {
 		return { yaw: cursorYaw, pitch: cursorPitch };
 	}
 
-	window.addEventListener('pointermove', onPointerMove);
-	window.addEventListener('pointerleave', onPointerLeave);
+	if (trackPointer) {
+		window.addEventListener('pointermove', onPointerMove);
+		window.addEventListener('pointerleave', onPointerLeave);
+	}
 
 	function resize() {
 		const width = canvas.clientWidth || window.innerWidth;
@@ -167,8 +172,10 @@ export function createCursorCompanion(canvas, { onReady } = {}) {
 			timer.dispose();
 			intersectionObserver.disconnect();
 			resizeObserver.disconnect();
-			window.removeEventListener('pointermove', onPointerMove);
-			window.removeEventListener('pointerleave', onPointerLeave);
+			if (trackPointer) {
+				window.removeEventListener('pointermove', onPointerMove);
+				window.removeEventListener('pointerleave', onPointerLeave);
+			}
 			scene.traverse((object) => {
 				object.geometry?.dispose();
 

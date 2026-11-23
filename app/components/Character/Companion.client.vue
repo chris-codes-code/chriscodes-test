@@ -1,8 +1,8 @@
 <script setup>
 	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-	// No cursor on touch devices — skip the 22MB GLB + WebGL entirely.
-	const enabled = !prefersReducedMotion() && !prefersNativeScroll();
+	const enabled = !prefersReducedMotion();
+	const trackPointer = !prefersNativeScroll();
 
 	const canvasRef = ref(null);
 	const isReady = ref(false);
@@ -15,6 +15,7 @@
 		const { createCursorCompanion } = await import('../../utils/cursor-companion.js');
 
 		companion = createCursorCompanion(canvas, {
+			trackPointer,
 			onReady: () => {
 				isReady.value = true;
 			},
