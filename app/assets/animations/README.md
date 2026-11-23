@@ -121,4 +121,4 @@ Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with Sc
 - **Header intro** (`intro/header.js`) — first-paint island reveal from `CoreHeader`. Owns `data-header-intro` only; scroll-hide stays locked until it finishes.
 - **Hero landing** (`intro/landing.js`) — hero title sequence via `useScrollAnimation` / `data-scroll-reveal`. Not tied to the header.
 - **Scroll reveals** — content sections use the same `data-scroll-reveal` FOUC hold; GSAP owns opacity after ready.
-- **Companion** — sits outside the hero GSAP targets; fades in only via its own `--ready` class when the GLB has loaded (no cursor look-at on coarse pointers).
+- **Companion** — sits outside the hero GSAP targets; fades in only via its own `--ready` class when the GLB has loaded. Skipped on coarse-pointer / touch for now (WebGL cost).

@@ -1,8 +1,9 @@
 <script setup>
 	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-	const enabled = !prefersReducedMotion();
-	const trackPointer = !prefersNativeScroll();
+	// Skip on touch for now — WebGL + GLB load is a likely mobile hitch.
+	const enabled = !prefersReducedMotion() && !prefersNativeScroll();
+	const trackPointer = true;
 
 	const canvasRef = ref(null);
 	const isReady = ref(false);
