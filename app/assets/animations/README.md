@@ -8,6 +8,7 @@ Each module stores a `gsap.context()` ([docs](https://gsap.com/docs/v3/GSAP/gsap
 
 - `**getGSAP()**` — loads GSAP and plugins once on the client
 - **Instance store** — one WeakMap per module, keyed to the DOM element
+- `**scroll-reveal.js**` — lean `reveal()` + `createScrollReveal()` for scroll modules (force3D / backface)
 - `**config.js**` — shared animation values
 
 ## How to use
@@ -109,7 +110,7 @@ out: (element) => {
 - `modal/` — modal animations
 - `scroll/` — ScrollTrigger intro/outro reveals (text, title, work, masonry, image, hero)
 - `ui/` — component animations
-- `utils/` — loader, instance store, body scroll lock, Lenis store, reduced-motion helper
+- `utils/` — loader, instance store, scroll-reveal helper, body scroll lock, Lenis store, reduced-motion helper
 
 ## Smooth scroll
 

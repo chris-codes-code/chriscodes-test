@@ -1,11 +1,8 @@
 import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 /**
- * Lazy-loads a GSAP animation module and binds it to a root element.
- * Follows the house pattern in assets/animations/README.md.
- *
- * On touch devices we skip scroll-reveals entirely — the opacity:0 holding
- * state + blur tweens were making mobile scroll feel broken / late.
+ * Lazy-loads a GSAP scroll module and binds it to a root element.
+ * Skips motion on reduced-motion / touch — marks ready so CSS FOUC holds clear.
  */
 export const useScrollAnimation = (rootRef, importAnimation, exportName) => {
 	const animationApi = shallowRef(null);
@@ -13,25 +10,17 @@ export const useScrollAnimation = (rootRef, importAnimation, exportName) => {
 	let element = null;
 
 	onMounted(async () => {
-		if (!import.meta.client || !rootRef.value) return;
+		const root = import.meta.client && rootRef.value;
+		if (!root) return;
 
-		const root = rootRef.value;
-
-		// Skip path: mark ready so CSS FOUC holds don’t leave content invisible.
-		if (prefersReducedMotion() || prefersNativeScroll()) {
-			root.setAttribute('data-scroll-reveal', 'ready');
-			return;
-		}
-
-		if (!root.hasAttribute('data-scroll-reveal')) {
-			root.setAttribute('data-scroll-reveal', '');
-		}
+		const skip = prefersReducedMotion() || prefersNativeScroll();
+		root.setAttribute('data-scroll-reveal', skip ? 'ready' : '');
+		if (skip) return;
 
 		const module = await importAnimation();
 		animation = (exportName && module[exportName]) || module.default || Object.values(module)[0];
 		animation?.init?.(root);
 		animationApi.value = animation;
-
 		root.setAttribute('data-scroll-reveal', 'ready');
 	});
 

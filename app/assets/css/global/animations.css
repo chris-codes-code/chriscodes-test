@@ -28,6 +28,8 @@
 	.ContentMasonry__item,
 	.ContentWork__entries {
 		opacity: 0;
+		backface-visibility: hidden;
+		transform: translate3d(0, 0, 0);
 	}
 
 	[data-scroll-reveal='ready'] .HeroScroller__container,
