@@ -114,7 +114,7 @@ out: (element) => {
 
 ## Smooth scroll
 
-Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger on fine-pointer only (skipped for reduced-motion and coarse-pointer / touch — native scroll on mobile). Scroll-reveal GSAP tweens run on desktop and touch; only reduced-motion skips them. Body scroll lock pauses Lenis when present and never sets overflow on `html`/`body`. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
+Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger on desktop and mobile (skipped only for reduced-motion). Scroll-reveal GSAP tweens run unless reduced-motion. Body scroll lock pauses Lenis when present and never sets overflow on `html`/`body`. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
 
 ## Motion systems (kept separate)
 

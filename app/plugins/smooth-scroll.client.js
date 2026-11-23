@@ -1,9 +1,9 @@
 import { setLenis } from '~/assets/animations/utils/lenis-store';
-import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 export default defineNuxtPlugin(async () => {
-	// Native scroll on touch / reduced-motion — Lenis + GSAP sync is the mobile jank source.
-	if (prefersReducedMotion() || prefersNativeScroll()) {
+	// Honor reduced-motion; otherwise Lenis runs on desktop and mobile.
+	if (prefersReducedMotion()) {
 		setLenis(null);
 
 		return {

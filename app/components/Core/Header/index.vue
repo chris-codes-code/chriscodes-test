@@ -1,6 +1,6 @@
 <script setup>
 	import { scrollToTop } from '~/assets/animations/utils/scroll-to-anchor';
-	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+	import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 	const route = useRoute();
 	const router = useRouter();
@@ -18,8 +18,8 @@
 	let headerIntro = null;
 	let introElement = null;
 
-	// Touch: skip blur intro — keep the island visible immediately.
-	const skipIntro = import.meta.client && (prefersReducedMotion() || prefersNativeScroll());
+	// Only reduced-motion skips the intro — touch still gets the island reveal.
+	const skipIntro = import.meta.client && prefersReducedMotion();
 
 	if (import.meta.client) {
 		document.documentElement.setAttribute('data-header-intro', skipIntro ? 'ready' : 'pending');
