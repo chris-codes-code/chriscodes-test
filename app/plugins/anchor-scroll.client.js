@@ -58,7 +58,7 @@ export default defineNuxtPlugin(() => {
 
 			if (path !== currentPath) return;
 
-			// Stop the native/Nuxt hash snap and animate with Lenis instead.
+			// Stop the native/Nuxt hash snap and animate with window.scrollTo instead.
 			event.preventDefault();
 			closeAll();
 

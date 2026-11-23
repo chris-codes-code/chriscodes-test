@@ -4,7 +4,7 @@ const prefersReducedMotion = () => {
 	return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
-// Touch-first devices — skip Lenis + companion pointer tracking.
+// Touch-first devices — skip companion pointer tracking + heavy scroll reveals.
 const prefersNativeScroll = () => {
 	if (typeof window === 'undefined') return true;
 

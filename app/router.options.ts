@@ -1,6 +1,6 @@
 import type { RouterConfig } from '@nuxt/schema';
 
-// Disable Nuxt's default hash snap — anchors are animated via Lenis.
+// Disable Nuxt's default hash snap — anchors are animated via window.scrollTo.
 export default {
 	scrollBehavior(to, from, savedPosition) {
 		if (to.hash) return false;

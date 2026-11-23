@@ -62,7 +62,6 @@
 		<div
 			ref="contentRef"
 			class="CoreHeaderPanel__content"
-			data-lenis-prevent
 		>
 			<Transition
 				name="core-header-panel"
