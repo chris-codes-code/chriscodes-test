@@ -1,8 +1,12 @@
 <script setup>
+	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+
 	const rootRef = ref(null);
+	const skipMotion = import.meta.client && (prefersReducedMotion() || prefersNativeScroll());
 
 	if (import.meta.client) {
-		document.documentElement.setAttribute('data-intro', 'pending');
+		// Don't leave the header trapped in pending if scroll animations are skipped.
+		document.documentElement.setAttribute('data-intro', skipMotion ? 'ready' : 'pending');
 	}
 
 	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/hero.js'), 'animateHeroScroller');

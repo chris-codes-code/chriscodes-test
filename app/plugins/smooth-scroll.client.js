@@ -1,11 +1,8 @@
-import Lenis from 'lenis';
-import 'lenis/dist/lenis.css';
-
-import { getGSAP } from '~/assets/animations/utils/gsap-loader';
 import { setLenis } from '~/assets/animations/utils/lenis-store';
 import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin(async () => {
+	// Completely skip Lenis on touch / reduced-motion — no import, no CSS, no instance.
 	if (prefersReducedMotion() || prefersNativeScroll()) {
 		setLenis(null);
 
@@ -15,6 +12,12 @@ export default defineNuxtPlugin(() => {
 			},
 		};
 	}
+
+	const [{ default: Lenis }, { getGSAP }] = await Promise.all([
+		import('lenis'),
+		import('~/assets/animations/utils/gsap-loader'),
+	]);
+	await import('lenis/dist/lenis.css');
 
 	const { ScrollTrigger } = getGSAP();
 
