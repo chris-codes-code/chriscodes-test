@@ -3,16 +3,6 @@ import { createElementInstanceStore } from '~/assets/animations/utils/create-ele
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
 import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-const lockIntroScroll = () => {
-	document.documentElement.style.overflow = 'hidden';
-	document.body.style.overflow = 'hidden';
-};
-
-const unlockIntroScroll = () => {
-	document.documentElement.style.overflow = '';
-	document.body.style.overflow = '';
-};
-
 const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
 const getLandingElements = (hero) => {
@@ -42,7 +32,6 @@ const animateLandingIntro = {
 		const { gsap, ScrollTrigger } = getGSAP();
 		const { headerIsland, headerParts, primary, secondary } = getLandingElements(element);
 
-		lockIntroScroll();
 		document.documentElement.setAttribute('data-intro', 'pending');
 
 		let timeline = null;
@@ -114,7 +103,6 @@ const animateLandingIntro = {
 				}
 
 				document.documentElement.setAttribute('data-intro', 'ready');
-				unlockIntroScroll();
 
 				gsap.fromTo(
 					element,
@@ -225,7 +213,6 @@ const animateLandingIntro = {
 		if (!element) return;
 
 		document.documentElement.setAttribute('data-intro', 'ready');
-		unlockIntroScroll();
 
 		const instance = getInstance(element);
 		window.clearTimeout(instance?.safetyTimer);
