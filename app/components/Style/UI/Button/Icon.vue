@@ -32,7 +32,11 @@
 		border: 1px solid var(--style-ui-button-icon-hover);
 		border-radius: 16px;
 		corner-shape: squircle;
-		transition: var(--theme-interactive-transition);
+		/* Don't transition color here — parent (e.g. header island) already does.
+		   Double color transitions lag badly on mobile Safari. */
+		transition:
+			background-color var(--transition-fast-ease),
+			border-color var(--transition-fast-ease);
 
 		&--text {
 			width: auto;
