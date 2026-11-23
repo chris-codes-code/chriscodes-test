@@ -1,7 +1,7 @@
 import { config } from '~/assets/animations/config';
 import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
-import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 /** Promote targets to their own compositor layer. */
 const gpu = {
@@ -63,7 +63,7 @@ const createScrollReveal = (setup) => {
 
 	return {
 		init: (element) => {
-			if (!element || prefersReducedMotion() || prefersNativeScroll()) return;
+			if (!element || prefersReducedMotion()) return;
 
 			const api = getGSAP();
 			let extra = null;

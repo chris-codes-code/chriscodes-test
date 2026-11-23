@@ -1,8 +1,8 @@
-import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 /**
  * Lazy-loads a GSAP scroll module and binds it to a root element.
- * Skips motion on reduced-motion / touch — marks ready so CSS FOUC holds clear.
+ * Skips only for reduced-motion — marks ready so CSS FOUC holds clear.
  */
 export const useScrollAnimation = (rootRef, importAnimation, exportName) => {
 	const animationApi = shallowRef(null);
@@ -13,7 +13,7 @@ export const useScrollAnimation = (rootRef, importAnimation, exportName) => {
 		const root = import.meta.client && rootRef.value;
 		if (!root) return;
 
-		const skip = prefersReducedMotion() || prefersNativeScroll();
+		const skip = prefersReducedMotion();
 		root.setAttribute('data-scroll-reveal', skip ? 'ready' : '');
 		if (skip) return;
 
