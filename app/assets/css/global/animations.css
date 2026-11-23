@@ -15,12 +15,30 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+	/* Roots: hide until useScrollAnimation marks ready (set on the element in markup). */
 	[data-scroll-reveal]:not([data-scroll-reveal='ready']) {
 		opacity: 0;
 	}
 
-	html[data-intro='pending'] .CoreHeader__island {
-		opacity: 0 !important;
+	/*
+	 * Inner GSAP targets: stay hidden even after the root is ready.
+	 * Skip path has no GSAP inline hold, so restore when the root is ready.
+	 */
+	.HeroScroller__container,
+	.ContentMasonry__item,
+	.ContentWork__entries {
+		opacity: 0;
+	}
+
+	[data-scroll-reveal='ready'] .HeroScroller__container,
+	[data-scroll-reveal='ready'] .ContentMasonry__item,
+	[data-scroll-reveal='ready'] .ContentWork__entries {
+		opacity: 1;
+	}
+
+	/* Header intro — independent of scroll reveals. */
+	html[data-header-intro='pending'] .CoreHeader__island {
+		opacity: 0;
 		visibility: hidden;
 	}
 }

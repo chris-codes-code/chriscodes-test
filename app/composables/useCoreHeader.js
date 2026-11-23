@@ -9,14 +9,17 @@ export function useCoreHeader(headerRef) {
 	const isSnap = ref(false);
 	const isAnchorScrolling = ref(getIsAnchorScrolling());
 	const { isHeaderPanelOpen } = useModal();
+	// Hold scroll-hide until the first-load intro finishes so load/Lenis jitter
+	// can’t tuck the island away right after it animates in.
+	const introLocked = ref(true);
 
-	const { isVisible, isSticky, show, bind, unbind } = useScrollVisibility({
+	const { isVisible, isSticky, show, bind, unbind, resetScrollBaseline } = useScrollVisibility({
 		getActivationDistance: () => headerRef.value?.offsetHeight || 0,
 		showThreshold: 50,
 		enableSticky: true,
-		// Keep the island visible while the panel is open or nav is scrolling
-		// to a section (programmatic scroll would otherwise hide it).
-		isActive: () => !isHeaderPanelOpen.value && !isAnchorScrolling.value,
+		// Keep the island visible while the panel is open, nav is scrolling to a
+		// section, or the first-load intro is still owning visibility.
+		isActive: () => !isHeaderPanelOpen.value && !isAnchorScrolling.value && !introLocked.value,
 		onShow: () => {
 			isSnap.value = false;
 		},
@@ -25,11 +28,20 @@ export function useCoreHeader(headerRef) {
 		},
 	});
 
+	const releaseIntroLock = () => {
+		if (!introLocked.value) return;
+
+		introLocked.value = false;
+		show({ snap: true });
+		resetScrollBaseline();
+	};
+
 	provide(coreHeaderContext, {
 		isSticky,
 		isVisible,
 		isSnap,
 		show,
+		releaseIntroLock,
 	});
 
 	watch(isHeaderPanelOpen, (isOpen) => {
@@ -59,6 +71,7 @@ export function useCoreHeader(headerRef) {
 		isVisible,
 		isSnap,
 		show,
+		releaseIntroLock,
 	};
 }
 
@@ -68,5 +81,6 @@ export function useCoreHeaderContext() {
 		isVisible: ref(true),
 		isSnap: ref(false),
 		show: () => {},
+		releaseIntroLock: () => {},
 	});
 }

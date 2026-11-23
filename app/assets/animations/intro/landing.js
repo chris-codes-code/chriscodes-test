@@ -8,31 +8,16 @@ const { deleteInstance, getInstance, setInstance } = createElementInstanceStore(
 const getLandingElements = (hero) => {
 	const primary = hero.querySelector('.HeroScroller__container--primary');
 	const secondary = hero.querySelector('.HeroScroller__container--secondary');
-	const headerIsland = document.querySelector('.CoreHeader__island');
-	const headerParts = headerIsland
-		? [
-				...headerIsland.querySelectorAll(
-					'.CoreHeader__section--start, .CoreHeader__section--center, .CoreHeader__section--end',
-				),
-			]
-		: [];
 
-	return { headerIsland, headerParts, primary, secondary };
+	return { primary, secondary };
 };
 
 const animateLandingIntro = {
 	init: (element) => {
-		if (!element) return;
-
-		if (prefersReducedMotion()) {
-			document.documentElement.setAttribute('data-intro', 'ready');
-			return;
-		}
+		if (!element || prefersReducedMotion()) return;
 
 		const { gsap, ScrollTrigger } = getGSAP();
-		const { headerIsland, headerParts, primary, secondary } = getLandingElements(element);
-
-		document.documentElement.setAttribute('data-intro', 'pending');
+		const { primary, secondary } = getLandingElements(element);
 
 		let timeline = null;
 		let safetyTimer = 0;
@@ -43,23 +28,6 @@ const animateLandingIntro = {
 				scale: 1,
 				filter: 'blur(0px)',
 			});
-
-			if (headerIsland) {
-				gsap.set(headerIsland, {
-					autoAlpha: 0,
-					y: -28,
-					scale: 0.92,
-					filter: 'blur(12px)',
-					transformOrigin: '50% 0%',
-				});
-			}
-
-			if (headerParts.length) {
-				gsap.set(headerParts, {
-					autoAlpha: 0,
-					y: 10,
-				});
-			}
 
 			if (primary) {
 				gsap.set(primary, {
@@ -89,20 +57,6 @@ const animateLandingIntro = {
 				if (finished) return;
 				finished = true;
 				window.clearTimeout(safetyTimer);
-
-				if (headerIsland) {
-					gsap.set(headerIsland, {
-						clearProps: 'opacity,visibility,transform,filter,scale',
-					});
-				}
-
-				if (headerParts.length) {
-					gsap.set(headerParts, {
-						clearProps: 'opacity,visibility,transform',
-					});
-				}
-
-				document.documentElement.setAttribute('data-intro', 'ready');
 
 				gsap.fromTo(
 					element,
@@ -141,33 +95,6 @@ const animateLandingIntro = {
 				timeline?.progress(1);
 				finish();
 			}, 3200);
-
-			if (headerIsland) {
-				timeline.to(
-					headerIsland,
-					{
-						autoAlpha: 1,
-						y: 0,
-						scale: 1,
-						filter: 'blur(0px)',
-						duration: config.duration.intro * 0.75,
-					},
-					config.intro.headerDelay,
-				);
-			}
-
-			if (headerParts.length) {
-				timeline.to(
-					headerParts,
-					{
-						autoAlpha: 1,
-						y: 0,
-						duration: config.duration.intro * 0.6,
-						stagger: 0.06,
-					},
-					config.intro.headerDelay + 0.06,
-				);
-			}
 
 			if (primary) {
 				timeline.to(
@@ -211,8 +138,6 @@ const animateLandingIntro = {
 
 	cleanup: (element) => {
 		if (!element) return;
-
-		document.documentElement.setAttribute('data-intro', 'ready');
 
 		const instance = getInstance(element);
 		window.clearTimeout(instance?.safetyTimer);

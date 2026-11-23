@@ -1,9 +1,10 @@
 <script setup>
 	import { scrollToTop } from '~/assets/animations/utils/scroll-to-anchor';
+	import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
 	const route = useRoute();
 	const router = useRouter();
-	const { isVisible, isSnap } = useCoreHeaderContext();
+	const { isVisible, isSnap, show, releaseIntroLock } = useCoreHeaderContext();
 	const { isHeaderPanelOpen, closeAll } = useModal();
 
 	defineProps({
@@ -11,6 +12,49 @@
 			default: null,
 			type: Array,
 		},
+	});
+
+	const islandRef = ref(null);
+	let headerIntro = null;
+	let introElement = null;
+
+	const skipIntro = import.meta.client && prefersReducedMotion();
+
+	if (import.meta.client) {
+		// Own FOUC hold — not tied to the hero landing timeline.
+		document.documentElement.setAttribute('data-header-intro', skipIntro ? 'ready' : 'pending');
+	}
+
+	onMounted(async () => {
+		if (!import.meta.client || !islandRef.value) return;
+
+		// Always reveal on first load, even when the page opens mid-scroll.
+		show({ snap: true });
+
+		if (skipIntro) {
+			releaseIntroLock();
+			return;
+		}
+
+		try {
+			const module = await import('~/assets/animations/intro/header.js');
+			headerIntro = module.animateHeaderIntro;
+			headerIntro?.init?.(islandRef.value, {
+				onComplete: releaseIntroLock,
+			});
+		} catch {
+			releaseIntroLock();
+		}
+	});
+
+	onBeforeUnmount(() => {
+		introElement = islandRef.value;
+	});
+
+	onUnmounted(() => {
+		if (headerIntro && introElement) headerIntro.cleanup?.(introElement);
+		headerIntro = null;
+		releaseIntroLock();
 	});
 
 	watch(
@@ -45,7 +89,10 @@
 		<div class="CoreHeader__main">
 			<BlockContainer>
 				<div class="CoreHeader__container">
-					<div class="CoreHeader__island">
+					<div
+						ref="islandRef"
+						class="CoreHeader__island"
+					>
 						<div
 							class="CoreHeader__background"
 							aria-hidden="true"

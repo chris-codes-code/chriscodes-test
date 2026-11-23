@@ -20,6 +20,7 @@
 		v-if="text"
 		ref="rootRef"
 		class="ContentText"
+		data-scroll-reveal
 	>
 		<BlockContainer>
 			<BlockColumns class="ContentText__columns">

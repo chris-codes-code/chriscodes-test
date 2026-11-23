@@ -12,18 +12,19 @@ const animateContentMasonry = {
 		const { gsap, ScrollTrigger } = getGSAP();
 
 		const context = gsap.context(() => {
-			const revealItems = () => {
-				const items = element.querySelectorAll('.ContentMasonry__item');
-				if (!items.length) return;
+			const items = element.querySelectorAll('.ContentMasonry__item');
+			if (!items.length) return;
 
-				gsap.set(items, {
-					opacity: 0,
-					y: 56,
-					scale: 0.94,
-					filter: 'blur(6px)',
-					transformOrigin: '50% 80%',
-				});
+			// Hide synchronously so useScrollAnimation can mark ready without a flash.
+			gsap.set(items, {
+				opacity: 0,
+				y: 56,
+				scale: 0.94,
+				filter: 'blur(6px)',
+				transformOrigin: '50% 80%',
+			});
 
+			const bindReveal = () => {
 				gsap.to(items, {
 					opacity: 1,
 					y: 0,
@@ -47,8 +48,9 @@ const animateContentMasonry = {
 				ScrollTrigger.refresh();
 			};
 
+			// Defer ScrollTrigger bind until layout settles; opacity is already locked.
 			requestAnimationFrame(() => {
-				requestAnimationFrame(revealItems);
+				requestAnimationFrame(bindReveal);
 			});
 		}, element);
 

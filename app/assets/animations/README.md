@@ -105,7 +105,7 @@ out: (element) => {
 ## What’s here
 
 - `config.js` — shared animation values
-- `intro/` — first-load landing sequence (header + hero + companion)
+- `intro/` — first-load sequences (header + hero landing; companion fades in on its own)
 - `modal/` — modal animations
 - `scroll/` — ScrollTrigger intro/outro reveals (text, title, work, masonry, image, hero)
 - `ui/` — component animations
@@ -115,6 +115,9 @@ out: (element) => {
 
 Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger (skipped only for reduced-motion). Scroll-reveal GSAP tweens still skip on coarse-pointer / reduced-motion so content stays visible. Body scroll lock pauses Lenis when present and never sets overflow on `html`/`body`. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
 
-## Landing intro
+## Motion systems (kept separate)
 
-`intro/landing.js` orchestrates the homepage first paint: header + primary title together, then secondary title. The companion fades in on its own when the GLB is ready, so model load never blocks the intro. Reduced-motion skips the companion; coarse-pointer devices still show it but without cursor look-at.
+- **Header intro** (`intro/header.js`) — first-paint island reveal from `CoreHeader`. Owns `data-header-intro` only; scroll-hide stays locked until it finishes.
+- **Hero landing** (`intro/landing.js`) — hero title sequence via `useScrollAnimation` / `data-scroll-reveal`. Not tied to the header.
+- **Scroll reveals** — content sections use the same `data-scroll-reveal` FOUC hold; GSAP owns opacity after ready.
+- **Companion** — sits outside the hero GSAP targets; fades in only via its own `--ready` class when the GLB has loaded (no cursor look-at on coarse pointers).

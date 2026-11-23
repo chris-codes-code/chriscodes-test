@@ -17,9 +17,15 @@ export const useScrollAnimation = (rootRef, importAnimation, exportName) => {
 
 		const root = rootRef.value;
 
-		if (prefersReducedMotion() || prefersNativeScroll()) return;
+		// Skip path: mark ready so CSS FOUC holds don’t leave content invisible.
+		if (prefersReducedMotion() || prefersNativeScroll()) {
+			root.setAttribute('data-scroll-reveal', 'ready');
+			return;
+		}
 
-		root.setAttribute('data-scroll-reveal', '');
+		if (!root.hasAttribute('data-scroll-reveal')) {
+			root.setAttribute('data-scroll-reveal', '');
+		}
 
 		const module = await importAnimation();
 		animation = (exportName && module[exportName]) || module.default || Object.values(module)[0];

@@ -32,6 +32,7 @@
 		v-if="items.length"
 		ref="rootRef"
 		class="ContentMasonry"
+		data-scroll-reveal
 	>
 		<BlockContainer>
 			<UIMasonry :item-count="items.length">

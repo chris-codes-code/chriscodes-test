@@ -55,6 +55,7 @@
 		v-if="rows.length"
 		ref="rootRef"
 		class="ContentWork"
+		data-scroll-reveal
 	>
 		<StyleTicker
 			v-for="(row, rowIndex) in rows"

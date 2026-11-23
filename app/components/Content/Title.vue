@@ -28,6 +28,7 @@
 		v-if="title"
 		ref="rootRef"
 		class="ContentTitle"
+		data-scroll-reveal
 	>
 		<StyleTitlePrimary
 			:title="title"

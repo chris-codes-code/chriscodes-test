@@ -1,13 +1,5 @@
 <script setup>
-	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
-
 	const rootRef = ref(null);
-	const skipMotion = import.meta.client && (prefersReducedMotion() || prefersNativeScroll());
-
-	if (import.meta.client) {
-		// Don't leave the header trapped in pending if scroll animations are skipped.
-		document.documentElement.setAttribute('data-intro', skipMotion ? 'ready' : 'pending');
-	}
 
 	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/hero.js'), 'animateHeroScroller');
 </script>
@@ -16,6 +8,7 @@
 	<div
 		ref="rootRef"
 		class="HeroScroller"
+		data-scroll-reveal
 	>
 		<div class="HeroScroller__container HeroScroller__container--primary">
 			<StyleTitlePrimary
@@ -26,14 +19,17 @@
 
 		<div
 			id="about"
-			class="HeroScroller__container HeroScroller__container--secondary"
+			class="HeroScroller__region HeroScroller__region--secondary"
 		>
+			<!-- Outside the GSAP title target — fades in only when the GLB is ready. -->
 			<CharacterCompanion />
 
-			<StyleTitlePrimary
-				title="create"
-				level="span"
-			/>
+			<div class="HeroScroller__container HeroScroller__container--secondary">
+				<StyleTitlePrimary
+					title="create"
+					level="span"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -43,6 +39,14 @@
 		margin-top: calc(var(--core-header-height) * -1);
 		transform-origin: 50% 30%;
 		will-change: transform, opacity, filter;
+
+		&__region {
+			position: relative;
+
+			&--secondary {
+				height: 50vh;
+			}
+		}
 
 		&__container {
 			display: flex;
@@ -58,6 +62,7 @@
 
 			&--secondary {
 				position: relative;
+				height: 100%;
 				padding-bottom: var(--core-header-height);
 
 				.StyleTitlePrimary {

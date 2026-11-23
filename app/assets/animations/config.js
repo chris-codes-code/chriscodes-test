@@ -6,6 +6,7 @@ const config = {
 		reveal: 1.05,
 		outro: 0.7,
 		intro: 1.15,
+		headerIntro: 0.55,
 	},
 	ease: {
 		primary: 'power2.out',
@@ -21,9 +22,8 @@ const config = {
 		toggleActions: 'play none none reverse',
 	},
 	intro: {
-		headerDelay: 0.02,
-		titleDelay: 0.18,
-		secondaryDelay: 0.38,
+		titleDelay: 0.08,
+		secondaryDelay: 0.28,
 	},
 };
 

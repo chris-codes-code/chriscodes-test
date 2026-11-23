@@ -96,10 +96,16 @@ export function useScrollVisibility({
 
 	let lenis = null;
 
-	const bind = () => {
+	const resetScrollBaseline = () => {
 		previousScrollY = getScrollY();
+		scrollUpStartY = null;
+		wasActive = false;
 		updateSticky();
 		wasSticky = isSticky.value;
+	};
+
+	const bind = () => {
+		resetScrollBaseline();
 
 		if (import.meta.client) {
 			lenis = useLenis();
@@ -121,5 +127,6 @@ export function useScrollVisibility({
 		hide,
 		bind,
 		unbind,
+		resetScrollBaseline,
 	};
 }

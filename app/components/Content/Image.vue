@@ -20,6 +20,7 @@
 		v-if="image"
 		ref="rootRef"
 		class="ContentImage"
+		data-scroll-reveal
 	>
 		<BlockContainer>
 			<BlockColumns class="ContentImage__columns">
