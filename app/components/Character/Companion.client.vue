@@ -1,13 +1,18 @@
 <script setup>
-	import { createCursorCompanion } from '../../utils/cursor-companion.js';
+	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+
+	// No cursor on touch devices — skip the 22MB GLB + WebGL entirely.
+	const enabled = !prefersReducedMotion() && !prefersNativeScroll();
 
 	const canvasRef = ref(null);
 	const isReady = ref(false);
 	let companion = null;
 	let idleId = 0;
 
-	const startCompanion = (canvas) => {
+	const startCompanion = async (canvas) => {
 		if (!canvas || companion) return;
+
+		const { createCursorCompanion } = await import('../../utils/cursor-companion.js');
 
 		companion = createCursorCompanion(canvas, {
 			onReady: () => {
@@ -16,27 +21,30 @@
 		});
 	};
 
-	watch(canvasRef, (canvas) => {
-		if (!canvas || companion) return;
+	if (enabled) {
+		watch(canvasRef, (canvas) => {
+			if (!canvas || companion) return;
 
-		if ('requestIdleCallback' in window) {
-			idleId = window.requestIdleCallback(() => startCompanion(canvas), { timeout: 1800 });
-		} else {
-			idleId = window.setTimeout(() => startCompanion(canvas), 400);
-		}
-	});
+			if ('requestIdleCallback' in window) {
+				idleId = window.requestIdleCallback(() => startCompanion(canvas), { timeout: 1800 });
+			} else {
+				idleId = window.setTimeout(() => startCompanion(canvas), 400);
+			}
+		});
 
-	onBeforeUnmount(() => {
-		if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
-		else window.clearTimeout(idleId);
+		onBeforeUnmount(() => {
+			if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
+			else window.clearTimeout(idleId);
 
-		companion?.destroy();
-		companion = null;
-	});
+			companion?.destroy();
+			companion = null;
+		});
+	}
 </script>
 
 <template>
 	<div
+		v-if="enabled"
 		aria-hidden="true"
 		class="CharacterCompanion"
 		:class="{ 'CharacterCompanion--ready': isReady }"

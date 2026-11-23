@@ -117,4 +117,4 @@ Lenis is initialised in `app/plugins/smooth-scroll.client.js` and synced with Sc
 
 ## Landing intro
 
-`intro/landing.js` orchestrates the homepage first paint: header + primary title together, then secondary title. The companion fades in on its own when the GLB is ready, so model load never blocks the intro.
+`intro/landing.js` orchestrates the homepage first paint: header + primary title together, then secondary title. The companion fades in on its own when the GLB is ready, so model load never blocks the intro. On coarse-pointer / reduced-motion devices the companion is skipped entirely.

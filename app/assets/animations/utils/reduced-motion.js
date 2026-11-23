@@ -4,7 +4,7 @@ const prefersReducedMotion = () => {
 	return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
-// Touch-first devices — Lenis feels glitchy on mobile, prefer native scroll.
+// Touch-first devices — skip Lenis + cursor companion (native scroll, no WebGL).
 const prefersNativeScroll = () => {
 	if (typeof window === 'undefined') return true;
 
