@@ -125,7 +125,8 @@
 		&__track {
 			display: flex;
 			width: max-content;
-			animation: style-ticker linear infinite;
+			/* TEMP: disable side-scroll to test mobile jank */
+			/* animation: style-ticker linear infinite; */
 		}
 
 		&--right &__track {

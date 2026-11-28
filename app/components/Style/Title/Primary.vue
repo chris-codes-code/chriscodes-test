@@ -127,7 +127,8 @@
 			transform: translate3d(0, 0, 0);
 			backface-visibility: hidden;
 			will-change: transform;
-			animation: style-title-primary linear infinite;
+			/* TEMP: disable side-scroll to test mobile jank */
+			/* animation: style-title-primary linear infinite; */
 		}
 
 		&--right &__track {

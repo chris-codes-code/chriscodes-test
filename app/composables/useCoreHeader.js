@@ -40,7 +40,8 @@ export function useCoreHeader(headerRef) {
 	});
 
 	onMounted(() => {
-		bind();
+		// TEMP: disable header show/hide on scroll to test mobile jank
+		// bind();
 
 		const stopWatchingAnchorScroll = onAnchorScrollingChange((value) => {
 			isAnchorScrolling.value = value;
@@ -50,7 +51,8 @@ export function useCoreHeader(headerRef) {
 	});
 
 	onUnmounted(() => {
-		unbind();
+		// TEMP: paired with bind() above
+		// unbind();
 	});
 
 	return {
