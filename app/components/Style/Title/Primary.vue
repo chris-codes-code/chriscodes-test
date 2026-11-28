@@ -1,6 +1,4 @@
 <script setup>
-	import { prefersNativeScroll } from '~/assets/animations/utils/reduced-motion';
-
 	const SPEED = 60; // px per second
 	const BREAK = '✱';
 
@@ -30,8 +28,8 @@
 		},
 	});
 
-	// Touch: static title only — infinite marquees of ~50svh type are a mobile GPU tax.
-	const animate = !prefersNativeScroll();
+	// TEMP: force marquees on for jank A/B (was: !prefersNativeScroll())
+	const animate = true;
 
 	const colorStyle = computed(() => (props.color ? { color: `var(--color-${props.color})` } : undefined));
 
@@ -127,8 +125,7 @@
 			transform: translate3d(0, 0, 0);
 			backface-visibility: hidden;
 			will-change: transform;
-			/* TEMP: disable side-scroll to test mobile jank */
-			/* animation: style-title-primary linear infinite; */
+			animation: style-title-primary linear infinite;
 		}
 
 		&--right &__track {
