@@ -14,7 +14,8 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 		alpha: true,
 		antialias: false,
 		canvas,
-		powerPreference: 'high-performance',
+		// low-power on touch avoids early GPU contention / thermal jank after first load.
+		powerPreference: trackPointer ? 'high-performance' : 'low-power',
 	});
 	renderer.setClearColor(0x000000, 0);
 	// Touch devices: keep pixel ratio lower — the GLB/WebGL cost dominates anyway.
@@ -149,9 +150,15 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 	);
 
 	let visible = true;
+	let lastFrameAt = 0;
+	const minFrameMs = trackPointer ? 0 : 1000 / 30;
 
 	function animate(timestamp) {
 		if (disposed || !visible) return;
+
+		// Touch: cap at ~30fps — idle sway doesn't need 60Hz and halves GPU load.
+		if (minFrameMs && timestamp - lastFrameAt < minFrameMs) return;
+		lastFrameAt = timestamp;
 
 		timer.update(timestamp);
 		const delta = Math.min(timer.getDelta(), 0.05);

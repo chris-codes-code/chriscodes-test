@@ -3,12 +3,14 @@
 
 	// Touch: show the companion, but skip pointer look-at.
 	const enabled = !prefersReducedMotion();
-	const trackPointer = !prefersNativeScroll();
+	const isTouch = prefersNativeScroll();
+	const trackPointer = !isTouch;
 
 	const canvasRef = ref(null);
 	const isReady = ref(false);
 	let companion = null;
 	let idleId = 0;
+	let loadHandler = null;
 
 	const startCompanion = async (canvas) => {
 		if (!canvas || companion) return;
@@ -23,18 +25,35 @@
 		});
 	};
 
+	const scheduleStart = (canvas) => {
+		const run = () => {
+			if ('requestIdleCallback' in window) {
+				// Touch: wait for real idle — forced early start fights Draco/WASM + first paint.
+				idleId = window.requestIdleCallback(() => startCompanion(canvas), {
+					timeout: isTouch ? 8000 : 1800,
+				});
+			} else {
+				idleId = window.setTimeout(() => startCompanion(canvas), isTouch ? 2500 : 400);
+			}
+		};
+
+		if (isTouch && document.readyState !== 'complete') {
+			loadHandler = () => run();
+			window.addEventListener('load', loadHandler, { once: true });
+			return;
+		}
+
+		run();
+	};
+
 	if (enabled) {
 		watch(canvasRef, (canvas) => {
 			if (!canvas || companion) return;
-
-			if ('requestIdleCallback' in window) {
-				idleId = window.requestIdleCallback(() => startCompanion(canvas), { timeout: 1800 });
-			} else {
-				idleId = window.setTimeout(() => startCompanion(canvas), 400);
-			}
+			scheduleStart(canvas);
 		});
 
 		onBeforeUnmount(() => {
+			if (loadHandler) window.removeEventListener('load', loadHandler);
 			if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
 			else window.clearTimeout(idleId);
 

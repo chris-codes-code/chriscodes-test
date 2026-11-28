@@ -1,6 +1,7 @@
 import { config } from '~/assets/animations/config';
 import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
+import { prefersNativeScroll } from '~/assets/animations/utils/reduced-motion';
 
 const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
@@ -57,6 +58,11 @@ const animateLandingIntro = {
 			instance.timeline.to(targets, { ...to, stagger: config.intro.secondaryDelay });
 
 			// Scroll fade — separate scrub, armed immediately (idle at scroll 0).
+			// Skip scale on touch: scaling a WebGL parent every scroll frame is brutal on mobile GPUs.
+			const scrubTo = prefersNativeScroll()
+				? { opacity: 0.35 }
+				: { opacity: 0.35, scale: 0.97 };
+
 			gsap.fromTo(
 				root,
 				{
@@ -64,8 +70,7 @@ const animateLandingIntro = {
 					scale: 1,
 				},
 				{
-					opacity: 0.35,
-					scale: 0.97,
+					...scrubTo,
 					ease: 'none',
 					scrollTrigger: {
 						trigger: root,
