@@ -186,6 +186,10 @@
 		gap: var(--columns-gap-y);
 
 		&__entries {
+			transform: translate3d(0, 0, 0);
+			backface-visibility: hidden;
+			will-change: transform;
+
 			.StyleTicker__track,
 			.StyleTicker__set {
 				gap: var(--columns-gap-x);
