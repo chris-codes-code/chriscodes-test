@@ -28,7 +28,6 @@
 		},
 	});
 
-	// TEMP: force marquees on for jank A/B (was: !prefersNativeScroll())
 	const animate = true;
 
 	const colorStyle = computed(() => (props.color ? { color: `var(--color-${props.color})` } : undefined));

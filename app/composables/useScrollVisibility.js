@@ -90,10 +90,6 @@ export function useScrollVisibility({
 		previousScrollY = scrollY;
 	};
 
-	const handleLenisScroll = () => {
-		handleScroll();
-	};
-
 	let lenis = null;
 
 	const resetScrollBaseline = () => {
@@ -111,12 +107,12 @@ export function useScrollVisibility({
 			lenis = useLenis();
 		}
 
-		if (lenis) lenis.on('scroll', handleLenisScroll);
+		if (lenis) lenis.on('scroll', handleScroll);
 		else window.addEventListener('scroll', handleScroll, { passive: true });
 	};
 
 	const unbind = () => {
-		lenis?.off('scroll', handleLenisScroll);
+		lenis?.off('scroll', handleScroll);
 		window.removeEventListener('scroll', handleScroll, { passive: true });
 	};
 
