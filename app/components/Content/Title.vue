@@ -19,8 +19,23 @@
 	});
 
 	const rootRef = ref(null);
+	let animation = null;
+	let rootEl = null;
 
-	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/title.js'), 'animateContentTitle');
+	onMounted(async () => {
+		if (!rootRef.value) return;
+
+		animation = (await import('~/assets/animations/scroll/title.js')).animateContentTitle;
+		animation.init(rootRef.value);
+	});
+
+	onBeforeUnmount(() => {
+		rootEl = rootRef.value;
+	});
+
+	onUnmounted(() => {
+		if (animation && rootEl) animation.cleanup(rootEl);
+	});
 </script>
 
 <template>
@@ -28,7 +43,6 @@
 		v-if="title"
 		ref="rootRef"
 		class="ContentTitle"
-		data-scroll-reveal
 	>
 		<StyleTitlePrimary
 			:title="title"

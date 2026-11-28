@@ -11,8 +11,23 @@
 	});
 
 	const rootRef = ref(null);
+	let animation = null;
+	let rootEl = null;
 
-	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/image.js'), 'animateContentImage');
+	onMounted(async () => {
+		if (!rootRef.value) return;
+
+		animation = (await import('~/assets/animations/scroll/image.js')).animateContentImage;
+		animation.init(rootRef.value);
+	});
+
+	onBeforeUnmount(() => {
+		rootEl = rootRef.value;
+	});
+
+	onUnmounted(() => {
+		if (animation && rootEl) animation.cleanup(rootEl);
+	});
 </script>
 
 <template>
@@ -20,7 +35,6 @@
 		v-if="image"
 		ref="rootRef"
 		class="ContentImage"
-		data-scroll-reveal
 	>
 		<BlockContainer>
 			<BlockColumns class="ContentImage__columns">

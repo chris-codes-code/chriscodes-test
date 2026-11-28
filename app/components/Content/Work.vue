@@ -24,11 +24,23 @@
 	const isModalOpen = computed(() => Boolean(activeEntry.value));
 
 	const rootRef = ref(null);
-	const workAnimation = useScrollAnimation(
-		rootRef,
-		() => import('~/assets/animations/scroll/work.js'),
-		'animateContentWork',
-	);
+	let workAnimation = null;
+	let rootEl = null;
+
+	onMounted(async () => {
+		if (!rootRef.value) return;
+
+		workAnimation = (await import('~/assets/animations/scroll/work.js')).animateContentWork;
+		workAnimation.init(rootRef.value);
+	});
+
+	onBeforeUnmount(() => {
+		rootEl = rootRef.value;
+	});
+
+	onUnmounted(() => {
+		if (workAnimation && rootEl) workAnimation.cleanup(rootEl);
+	});
 
 	const openEntry = (entry) => {
 		if (activeEntry.value) return;
@@ -39,13 +51,13 @@
 		}
 
 		// Outro + modal open together
-		workAnimation.value?.out?.(rootRef.value);
+		workAnimation?.out?.(rootRef.value);
 		activeEntry.value = entry;
 	};
 
 	const closeEntry = () => {
 		// Intro back + modal close together
-		workAnimation.value?.in?.(rootRef.value);
+		workAnimation?.in?.(rootRef.value);
 		activeEntry.value = null;
 	};
 </script>
@@ -55,7 +67,6 @@
 		v-if="rows.length"
 		ref="rootRef"
 		class="ContentWork"
-		data-scroll-reveal
 	>
 		<StyleTicker
 			v-for="(row, rowIndex) in rows"

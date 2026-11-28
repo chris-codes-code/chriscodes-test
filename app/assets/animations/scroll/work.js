@@ -1,9 +1,11 @@
 import { config } from '~/assets/animations/config';
-import { createScrollReveal, demote, gpu, promote, reveal } from '~/assets/animations/utils/scroll-reveal.js';
+import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
-import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
+import { scrollTriggerConfig } from '~/assets/animations/utils/scroll-reveal.js';
 
-const rowsOf = (element) => element.querySelectorAll('.ContentWork__entries');
+const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
+
+const rowsOf = (root) => root.querySelectorAll('.ContentWork__entries');
 
 const from = {
 	opacity: 0,
@@ -20,29 +22,49 @@ const to = {
 	filter: 'blur(0px)',
 };
 
-const work = createScrollReveal((element) => {
-	const rows = rowsOf(element);
-	if (!rows.length) return;
+const ensureInstance = (root) => {
+	let instance = getInstance(root);
 
-	const scrollTween = reveal(rows, {
-		trigger: element,
-		from,
-		to,
-		stagger: 0.14,
-	});
+	if (!instance) {
+		const { gsap } = getGSAP();
+		instance = {
+			context: gsap.context(() => {}, root),
+			modalTween: null,
+			scrollTween: null,
+		};
+		setInstance(root, instance);
+	}
 
-	return { scrollTween, modalTween: null };
-});
+	return instance;
+};
 
 const animateContentWork = {
-	init: work.init,
-	cleanup: work.cleanup,
+	init(root) {
+		if (!root || getInstance(root)) return;
 
-	out: (element) => {
-		if (!element || prefersReducedMotion()) return;
+		const rows = rowsOf(root);
+		if (!rows.length) return;
 
-		const instance = work.getInstance(element);
-		const rows = rowsOf(element);
+		const { gsap } = getGSAP();
+		const instance = ensureInstance(root);
+
+		instance.context.add(() => {
+			gsap.set(rows, from);
+			instance.scrollTween = gsap.to(rows, {
+				...to,
+				duration: config.duration.reveal,
+				ease: config.ease.reveal,
+				stagger: 0.14,
+				scrollTrigger: scrollTriggerConfig(root),
+			});
+		});
+	},
+
+	out(root) {
+		if (!root) return;
+
+		const instance = getInstance(root);
+		const rows = rowsOf(root);
 		if (!instance || !rows.length) return;
 
 		const { gsap } = getGSAP();
@@ -51,9 +73,7 @@ const animateContentWork = {
 		instance.modalTween?.kill();
 
 		instance.context.add(() => {
-			promote(rows);
 			instance.modalTween = gsap.to(rows, {
-				...gpu,
 				opacity: 0,
 				y: 48,
 				scale: 0.96,
@@ -65,11 +85,11 @@ const animateContentWork = {
 		});
 	},
 
-	in: (element) => {
-		if (!element || prefersReducedMotion()) return;
+	in(root) {
+		if (!root) return;
 
-		const instance = work.getInstance(element);
-		const rows = rowsOf(element);
+		const instance = getInstance(root);
+		const rows = rowsOf(root);
 		if (!instance || !rows.length) return;
 
 		const { gsap } = getGSAP();
@@ -77,20 +97,28 @@ const animateContentWork = {
 		instance.modalTween?.kill();
 
 		instance.context.add(() => {
-			promote(rows);
 			instance.modalTween = gsap.to(rows, {
-				...gpu,
 				...to,
 				duration: config.duration.reveal * 0.85,
 				ease: config.ease.reveal,
 				stagger: 0.1,
 				onComplete: () => {
-					demote(rows);
 					instance.scrollTween?.progress(1);
 					instance.scrollTween?.scrollTrigger?.enable();
 				},
 			});
 		});
+	},
+
+	cleanup(root) {
+		if (!root) return;
+
+		const instance = getInstance(root);
+		if (!instance) return;
+
+		instance.modalTween?.kill();
+		instance.context?.revert();
+		deleteInstance(root);
 	},
 };
 

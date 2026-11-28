@@ -1,182 +1,95 @@
 import { config } from '~/assets/animations/config';
 import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
 import { getGSAP } from '~/assets/animations/utils/gsap-loader';
-import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
-import { demote, gpu, willChange } from '~/assets/animations/utils/scroll-reveal.js';
 
 const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
-const getLandingElements = (hero) => {
-	const primary = hero.querySelector('.HeroScroller__container--primary');
-	const secondary = hero.querySelector('.HeroScroller__container--secondary');
+const getElements = (root) => ({
+	primary: root.querySelector('.HeroScroller__container--primary'),
+	secondary: root.querySelector('.HeroScroller__container--secondary'),
+});
 
-	return { primary, secondary };
+const ensureInstance = (root) => {
+	let instance = getInstance(root);
+
+	if (!instance) {
+		const { gsap } = getGSAP();
+		instance = { context: gsap.context(() => {}, root), timeline: null };
+		setInstance(root, instance);
+	}
+
+	return instance;
+};
+
+const from = {
+	autoAlpha: 0,
+	yPercent: 18,
+	clipPath: 'inset(18% 0 18% 0)',
+};
+
+const to = {
+	autoAlpha: 1,
+	yPercent: 0,
+	clipPath: 'inset(0% 0 0% 0)',
+	duration: config.duration.intro,
 };
 
 const animateLandingIntro = {
-	init: (element) => {
-		if (!element || prefersReducedMotion()) return;
+	init(root) {
+		if (!root || getInstance(root)) return;
 
 		const { gsap, ScrollTrigger } = getGSAP();
-		const { primary, secondary } = getLandingElements(element);
+		const { primary, secondary } = getElements(root);
+		const targets = [primary, secondary].filter(Boolean);
+		if (!targets.length) return;
 
-		let timeline = null;
-		let safetyTimer = 0;
-		let cancelled = false;
+		const instance = ensureInstance(root);
 
-		const context = gsap.context(() => {
-			gsap.set(element, {
-				...gpu,
-				opacity: 1,
-				scale: 1,
-				filter: 'blur(0px)',
-			});
+		instance.context.add(() => {
+			gsap.set(targets, from);
 
-			// Lock from-state sync so the FOUC hold can lift without a flash.
-			if (primary) {
-				gsap.set(primary, {
-					...gpu,
-					willChange,
-					autoAlpha: 0,
-					yPercent: 18,
-					clipPath: 'inset(18% 0 18% 0)',
-					filter: 'blur(14px)',
-					scale: 0.98,
-					transformOrigin: '50% 50%',
-				});
-			}
-
-			if (secondary) {
-				gsap.set(secondary, {
-					...gpu,
-					willChange,
-					autoAlpha: 0,
-					yPercent: 12,
-					clipPath: 'inset(20% 0 20% 0)',
-					filter: 'blur(10px)',
-					scale: 0.985,
-					transformOrigin: '50% 50%',
-				});
-			}
-
-			let finished = false;
-
-			const finish = () => {
-				if (finished) return;
-				finished = true;
-				window.clearTimeout(safetyTimer);
-
-				// Drop compositor hints once the intro settles.
-				[primary, secondary, element].forEach((node) => {
-					if (node) demote(node);
-				});
-
-				gsap.fromTo(
-					element,
-					{
-						...gpu,
-						opacity: 1,
-						scale: 1,
-						filter: 'blur(0px)',
-					},
-					{
-						...gpu,
-						opacity: 0.35,
-						scale: 0.97,
-						filter: 'blur(4px)',
-						ease: 'none',
-						scrollTrigger: {
-							trigger: element,
-							start: 'top top',
-							end: 'bottom top',
-							scrub: 0.6,
-							invalidateOnRefresh: true,
-						},
-					},
-				);
-
-				ScrollTrigger.refresh();
-			};
-
-			timeline = gsap.timeline({
-				paused: true,
+			instance.timeline = gsap.timeline({
 				defaults: {
 					ease: config.ease.intro,
-					...gpu,
 				},
-				onComplete: finish,
 			});
 
-			if (primary) {
-				timeline.to(
-					primary,
-					{
-						autoAlpha: 1,
-						yPercent: 0,
-						clipPath: 'inset(0% 0 0% 0)',
-						filter: 'blur(0px)',
-						scale: 1,
-						duration: config.duration.intro,
+			instance.timeline.to(targets, { ...to, stagger: config.intro.secondaryDelay });
+
+			// Scroll fade — separate scrub, armed immediately (idle at scroll 0).
+			gsap.fromTo(
+				root,
+				{
+					opacity: 1,
+					scale: 1,
+				},
+				{
+					opacity: 0.35,
+					scale: 0.97,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: root,
+						start: 'top top',
+						end: 'bottom top',
+						scrub: 0.6,
+						invalidateOnRefresh: true,
 					},
-					0,
-				);
-			}
+				},
+			);
 
-			if (secondary) {
-				timeline.to(
-					secondary,
-					{
-						autoAlpha: 1,
-						yPercent: 0,
-						clipPath: 'inset(0% 0 0% 0)',
-						filter: 'blur(0px)',
-						scale: 1,
-						duration: config.duration.intro,
-					},
-					config.intro.secondaryDelay,
-				);
-			}
-
-			if (!timeline.getChildren().length) {
-				finish();
-				return;
-			}
-
-			// Two frames: paint the from-state + promoted layers, then play.
-			requestAnimationFrame(() => {
-				requestAnimationFrame(() => {
-					if (cancelled) return;
-					gsap.ticker.wake();
-					timeline.play(0);
-				});
-			});
-
-			safetyTimer = window.setTimeout(() => {
-				if (finished) return;
-				timeline?.progress(1);
-				finish();
-			}, 3200);
-		}, element);
-
-		setInstance(element, {
-			context,
-			safetyTimer,
-			timeline,
-			cancel: () => {
-				cancelled = true;
-			},
+			ScrollTrigger.refresh();
 		});
 	},
 
-	cleanup: (element) => {
-		if (!element) return;
+	cleanup(root) {
+		if (!root) return;
 
-		const instance = getInstance(element);
-		instance?.cancel?.();
-		window.clearTimeout(instance?.safetyTimer);
-		instance?.timeline?.kill();
-		instance?.context?.revert();
-		deleteInstance(element);
+		const instance = getInstance(root);
+		if (!instance) return;
+
+		instance.timeline?.kill();
+		instance.context?.revert();
+		deleteInstance(root);
 	},
 };
 

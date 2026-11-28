@@ -5,45 +5,72 @@
 		{
 			label: 'H1',
 			previewClass: 'type-heading type-heading--h1',
-			selectors: ['h1', 'type-heading type-heading--h1'],
-			font: 'Roboto Bold',
+			selectors: ['h1', '.type-heading.type-heading--h1'],
+			font: 'Primary Bold',
 			size: typeSize('2.5rem', '3.5rem'),
 			lineHeight: typeSize('1.5', '1.25'),
-			letterSpacing: '',
+			letterSpacing: '—',
 		},
 		{
 			label: 'H2',
 			previewClass: 'type-heading type-heading--h2',
-			selectors: ['h2', 'type-heading type-heading--h2'],
-			font: 'Roboto Bold',
+			selectors: ['h2', '.type-heading.type-heading--h2'],
+			font: 'Primary Bold',
 			size: typeSize('2rem', '2.5rem'),
 			lineHeight: typeSize('1.5', '1.25'),
-			letterSpacing: '',
+			letterSpacing: '—',
 		},
 		{
 			label: 'H3',
 			previewClass: 'type-heading type-heading--h3',
-			selectors: ['h3–h6', 'type-heading type-heading--h3'],
-			font: 'Roboto Bold',
+			selectors: ['h3–h6', '.type-heading.type-heading--h3'],
+			font: 'Primary Bold',
 			size: typeSize('1.5rem', '1.75rem'),
 			lineHeight: '1.25',
-			letterSpacing: '',
+			letterSpacing: '—',
 		},
 		{
 			label: 'Body',
 			previewClass: 'type-body',
-			selectors: ['p', 'type-body'],
-			font: 'Nunito',
-			size: '1rem',
-			lineHeight: '1.65',
-			letterSpacing: '',
+			selectors: ['p', '.type-body'],
+			font: 'Secondary',
+			size: '1.25rem',
+			lineHeight: '1.5',
+			letterSpacing: '—',
+		},
+		{
+			label: 'Body SM',
+			previewClass: 'type-body type-body--sm',
+			selectors: ['.type-body.type-body--sm'],
+			font: 'Secondary',
+			size: '0.75rem',
+			lineHeight: '1.5',
+			letterSpacing: '—',
+		},
+		{
+			label: 'Body LG',
+			previewClass: 'type-body type-body--lg',
+			selectors: ['.type-body.type-body--lg'],
+			font: 'Secondary',
+			size: 'max(18px, 1.5vw)',
+			lineHeight: '1.5',
+			letterSpacing: '—',
 		},
 		{
 			label: 'UI',
 			previewClass: 'type-ui',
-			selectors: ['type-ui'],
-			font: 'Roboto',
+			selectors: ['.type-ui'],
+			font: 'Primary',
 			size: '1rem',
+			lineHeight: '1.25',
+			letterSpacing: '0.05em',
+		},
+		{
+			label: 'UI SM',
+			previewClass: 'type-ui type-ui--sm',
+			selectors: ['.type-ui.type-ui--sm'],
+			font: 'Primary',
+			size: '0.75rem',
 			lineHeight: '1.25',
 			letterSpacing: '0.05em',
 		},
@@ -55,14 +82,16 @@
 		<p class="DeveloperStyleGuideSectionType__note">
 			Base size
 			<code>--font-size-base</code>
-			is
-			<code>13px</code>
-			/
-			<code>15px</code>
-			desktop. Families:
+			inherits from the browser (optionally
+			<code>16px</code>
+			on desktop). Families:
 			<code>--font-family-primary</code>,
 			<code>--font-family-primary-bold</code>,
 			<code>--font-family-secondary</code>.
+			Shorthands:
+			<code>--font-heading</code>,
+			<code>--font-body</code>,
+			<code>--font-ui</code>.
 		</p>
 
 		<DeveloperStyleGuideTable>

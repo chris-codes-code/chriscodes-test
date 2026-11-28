@@ -11,8 +11,23 @@
 	});
 
 	const rootRef = ref(null);
+	let animation = null;
+	let rootEl = null;
 
-	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/text.js'), 'animateContentText');
+	onMounted(async () => {
+		if (!rootRef.value) return;
+
+		animation = (await import('~/assets/animations/scroll/text.js')).animateContentText;
+		animation.init(rootRef.value);
+	});
+
+	onBeforeUnmount(() => {
+		rootEl = rootRef.value;
+	});
+
+	onUnmounted(() => {
+		if (animation && rootEl) animation.cleanup(rootEl);
+	});
 </script>
 
 <template>
@@ -20,7 +35,6 @@
 		v-if="text"
 		ref="rootRef"
 		class="ContentText"
-		data-scroll-reveal
 	>
 		<BlockContainer>
 			<BlockColumns class="ContentText__columns">
@@ -32,8 +46,11 @@
 						{{ title }}
 					</h2>
 
-					<StyleText>
-						<PrimitiveHTML :html="text" />
+					<StyleText class="type-body type-body--lg">
+						<PrimitiveHTML
+							class="ContentText__text"
+							:html="text"
+						/>
 					</StyleText>
 				</BlockColumn>
 			</BlockColumns>
@@ -59,11 +76,6 @@
 
 		&__title {
 			margin-bottom: var(--space-lg);
-		}
-
-		&__split-word {
-			display: inline-block;
-			backface-visibility: hidden;
 		}
 	}
 </style>

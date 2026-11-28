@@ -1,3 +1,5 @@
+@import '~/assets/layout/css/media-queries.css';
+
 h1,
 h2,
 h3,
@@ -50,13 +52,21 @@ p,
 	font: var(--font-body);
 	display: block;
 	margin: 0;
+}
 
-	&--sm {
-		font-size: 0.75rem;
+.type-body--sm {
+	font-size: 0.75rem;
+
+	:where(p) {
+		font-size: inherit;
 	}
+}
 
-	&--lg {
-		font-size: 1.5rem;
+.type-body--lg {
+	font-size: max(18px, 1.5vw);
+
+	:where(p) {
+		font-size: inherit;
 	}
 }
 
@@ -68,10 +78,9 @@ p + p {
 	font: var(--font-ui);
 	display: block;
 	margin: 0;
-	/* text-transform: uppercase; */
 	letter-spacing: 0.05em;
+}
 
-	&--sm {
-		font-size: 0.75rem;
-	}
+.type-ui--sm {
+	font-size: 0.75rem;
 }

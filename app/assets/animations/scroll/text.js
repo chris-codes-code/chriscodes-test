@@ -1,70 +1,67 @@
-import { config } from '~/assets/animations/config';
-import {
-	createScrollReveal,
-	demote,
-	gpu,
-	promote,
-	scrollTriggerVars,
-	willChange,
-} from '~/assets/animations/utils/scroll-reveal.js';
+import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
+import { getGSAP } from '~/assets/animations/utils/gsap-loader';
+import { prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-const splitWords = (SplitText, node, className) =>
-	SplitText.create(node, {
-		type: 'words',
-		wordsClass: className,
-		aria: 'none',
-	}).words;
+const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
-const animateContentText = createScrollReveal((element, { gsap, SplitText }) => {
-	const title = element.querySelector('.ContentText__title');
-	const body = element.querySelector('.StyleText');
-	const groups = [];
+const FADED = 0.18;
 
-	if (title) {
-		groups.push({
-			words: splitWords(SplitText, title, 'ContentText__split-word'),
-			from: { opacity: 0, y: 28, filter: 'blur(6px)' },
-			stagger: 0.05,
-			at: 0,
-		});
-	}
+const getTargets = (root) =>
+	[root.querySelector('.ContentText__title'), root.querySelector('.ContentText__text')].filter(Boolean);
 
-	if (body) {
-		groups.push({
-			words: splitWords(SplitText, body, 'ContentText__split-word'),
-			from: { opacity: 0, y: 18, filter: 'blur(6px)' },
-			stagger: 0.03,
-			at: title ? 0.1 : 0,
-		});
-	}
+const animateContentText = {
+	init(root) {
+		if (!root || getInstance(root) || prefersReducedMotion()) return;
 
-	if (!groups.length) return;
+		const targets = getTargets(root);
+		if (!targets.length) return;
 
-	const allWords = groups.flatMap(({ words }) => [...words]);
+		const { gsap, SplitText, ScrollTrigger } = getGSAP();
+		const splits = [];
 
-	const timeline = gsap.timeline({
-		scrollTrigger: scrollTriggerVars(element),
-		onComplete: () => demote(allWords),
-		onReverseComplete: () => demote(allWords),
-		onStart: () => promote(allWords),
-	});
+		const context = gsap.context(() => {
+			const words = targets.flatMap((target) => {
+				const split = SplitText.create(target, {
+					type: 'words',
+					wordsClass: 'ContentText__split-word',
+					aria: 'none',
+				});
+				splits.push(split);
+				gsap.set(target, { opacity: 1 });
+				return split.words;
+			});
 
-	groups.forEach(({ words, from, stagger, at }) => {
-		gsap.set(words, { ...gpu, willChange, ...from });
-		timeline.to(
-			words,
-			{
-				...gpu,
+			if (!words.length) return;
+
+			gsap.set(words, { opacity: FADED });
+
+			gsap.to(words, {
 				opacity: 1,
-				y: 0,
-				filter: 'blur(0px)',
-				duration: config.duration.reveal,
-				ease: config.ease.reveal,
-				stagger,
-			},
-			at,
-		);
-	});
-});
+				ease: 'none',
+				stagger: 0.04,
+				scrollTrigger: {
+					trigger: root,
+					start: 'top 100%',
+					end: 'center 25%',
+					scrub: 0.35,
+				},
+			});
+		}, root);
+
+		setInstance(root, { context, splits });
+		ScrollTrigger.refresh();
+	},
+
+	cleanup(root) {
+		if (!root) return;
+
+		const instance = getInstance(root);
+		if (!instance) return;
+
+		instance.splits?.forEach((split) => split.revert());
+		instance.context?.revert();
+		deleteInstance(root);
+	},
+};
 
 export { animateContentText };

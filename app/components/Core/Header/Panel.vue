@@ -152,14 +152,18 @@
 			opacity: 0;
 			overflow: hidden;
 			overscroll-behavior: contain;
-			transition: opacity 0.3s var(--core-header-panel-ease);
+			transition:
+				opacity 0.3s var(--core-header-panel-ease),
+				color var(--theme-color-ease);
 		}
 
 		&--open &__content {
 			opacity: 1;
 			overflow-y: auto;
 			-webkit-overflow-scrolling: touch;
-			transition: opacity 0.3s var(--core-header-panel-ease) 0.15s;
+			transition:
+				opacity 0.3s var(--core-header-panel-ease) 0.15s,
+				color var(--theme-color-ease);
 		}
 
 		&__panel {

@@ -8,7 +8,7 @@ Each module stores a `gsap.context()` ([docs](https://gsap.com/docs/v3/GSAP/gsap
 
 - `**getGSAP()**` — loads GSAP and plugins once on the client
 - **Instance store** — one WeakMap per module, keyed to the DOM element
-- `**scroll-reveal.js**` — lean `reveal()` + `createScrollReveal()` (force3D, backface, promote/demote `will-change`)
+- `**scrollTriggerConfig()**` — shared ScrollTrigger defaults from `config.scroll`
 - `**config.js**` — shared animation values
 
 ## How to use
@@ -23,19 +23,33 @@ import { getGSAP } from '~/assets/animations/utils/gsap-loader';
 
 const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
-const animateExample = {
-	init: (element) => {
-		if (!element) return;
+const ensureInstance = (root) => {
+	let instance = getInstance(root);
 
+	if (!instance) {
 		const { gsap } = getGSAP();
-		const context = gsap.context(() => {}, element);
-		setInstance(element, { context });
+		instance = { context: gsap.context(() => {}, root) };
+		setInstance(root, instance);
+	}
+
+	return instance;
+};
+
+const animateExample = {
+	init(root) {
+		if (!root || getInstance(root)) return;
+
+		const instance = ensureInstance(root);
+		instance.context.add(() => {
+			// tweens here
+		});
 	},
 
-	cleanup: (element) => {
-		if (!element) return;
-		getInstance(element)?.context?.revert();
-		deleteInstance(element);
+	cleanup(root) {
+		if (!root) return;
+
+		getInstance(root)?.context?.revert();
+		deleteInstance(root);
 	},
 };
 
@@ -47,22 +61,22 @@ export { animateExample };
 When an animation is required later, add it to the context:
 
 ```js
-in: (element) => {
+in: (root) => {
 	const { gsap } = getGSAP();
-	const context = getInstance(element)?.context;
-	if (!context) return;
+	const instance = getInstance(root);
+	if (!instance) return;
 
-	context.add(() => {
+	instance.context.add(() => {
 		gsap.to('.box', { opacity: 1 });
 	});
 },
 
-out: (element) => {
+out: (root) => {
 	const { gsap } = getGSAP();
-	const context = getInstance(element)?.context;
-	if (!context) return;
+	const instance = getInstance(root);
+	if (!instance) return;
 
-	context.add(() => {
+	instance.context.add(() => {
 		gsap.to('.box', { opacity: 0 });
 	});
 },
@@ -82,19 +96,21 @@ out: (element) => {
 <script setup>
 	const rootRef = ref(null);
 	let animation = null;
-	let element = null;
+	let rootEl = null;
 
 	onMounted(async () => {
+		if (!rootRef.value) return;
+
 		animation = (await import('~/assets/animations/example.js')).animateExample;
 		animation.init(rootRef.value);
 	});
 
 	onBeforeUnmount(() => {
-		element = rootRef.value;
+		rootEl = rootRef.value;
 	});
 
 	onUnmounted(() => {
-		if (animation && element) animation.cleanup(element);
+		if (animation && rootEl) animation.cleanup(rootEl);
 	});
 </script>
 ```
@@ -103,22 +119,23 @@ out: (element) => {
 
 `config.js` holds shared animation values for this project (duration, ease, etc.). Use it from animation modules instead of hard-coded numbers so motion stays consistent when values change.
 
+Scroll reveals should use `scrollTriggerConfig(trigger)` from `utils/scroll-reveal.js` so start/end/`toggleActions` stay shared.
+
 ## What’s here
 
 - `config.js` — shared animation values
-- `intro/` — first-load sequences (header + hero landing; companion fades in on its own)
+- `intro/` — first-load sequences (hero landing; companion fades in on its own)
 - `modal/` — modal animations
-- `scroll/` — ScrollTrigger intro/outro reveals (text, title, work, masonry, image, hero)
+- `scroll/` — ScrollTrigger reveals (text, title, work, masonry, image)
 - `ui/` — component animations
-- `utils/` — loader, instance store, scroll-reveal helper, body scroll lock, Lenis store, reduced-motion helper
+- `utils/` — loader, instance store, scrollTriggerConfig, body scroll lock, Lenis store, reduced-motion helper (Lenis / companion only)
 
 ## Smooth scroll
 
-Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger on desktop and mobile (skipped only for reduced-motion). Scroll-reveal GSAP tweens run unless reduced-motion. Body scroll lock pauses Lenis when present and never sets overflow on `html`/`body`. Prefer `useScrollAnimation()` in Vue components rather than wiring GSAP in `.vue` files.
+Lenis is lazy-loaded in `app/plugins/smooth-scroll.client.js` and synced with ScrollTrigger on desktop and mobile (skipped only for reduced-motion). Body scroll lock pauses Lenis when present and never sets overflow on `html`/`body`.
 
 ## Motion systems (kept separate)
 
-- **Header intro** (`intro/header.js`) — first-paint island reveal from `CoreHeader`. Owns `data-header-intro` only; scroll-hide stays locked until it finishes.
-- **Hero landing** (`intro/landing.js`) — hero title sequence via `useScrollAnimation` / `data-scroll-reveal`. Not tied to the header.
-- **Scroll reveals** — content sections use the same `data-scroll-reveal` FOUC hold; GSAP owns opacity after ready.
+- **Hero landing** (`intro/landing.js`) — hero title sequence from `Hero/Scroller`.
+- **Scroll reveals** — content sections; CSS hides targets until GSAP owns them after `init`.
 - **Companion** — sits outside the hero GSAP targets; fades in only via its own `--ready` class when the GLB has loaded. Skipped on coarse-pointer / touch for now (WebGL cost).

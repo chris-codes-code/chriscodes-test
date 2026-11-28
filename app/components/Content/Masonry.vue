@@ -23,8 +23,23 @@
 	};
 
 	const rootRef = ref(null);
+	let animation = null;
+	let rootEl = null;
 
-	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/masonry.js'), 'animateContentMasonry');
+	onMounted(async () => {
+		if (!rootRef.value) return;
+
+		animation = (await import('~/assets/animations/scroll/masonry.js')).animateContentMasonry;
+		animation.init(rootRef.value);
+	});
+
+	onBeforeUnmount(() => {
+		rootEl = rootRef.value;
+	});
+
+	onUnmounted(() => {
+		if (animation && rootEl) animation.cleanup(rootEl);
+	});
 </script>
 
 <template>
@@ -32,7 +47,6 @@
 		v-if="items.length"
 		ref="rootRef"
 		class="ContentMasonry"
-		data-scroll-reveal
 	>
 		<BlockContainer>
 			<UIMasonry :item-count="items.length">

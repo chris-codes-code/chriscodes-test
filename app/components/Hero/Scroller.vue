@@ -1,14 +1,28 @@
 <script setup>
 	const rootRef = ref(null);
+	let animation = null;
+	let rootEl = null;
 
-	useScrollAnimation(rootRef, () => import('~/assets/animations/scroll/hero.js'), 'animateHeroScroller');
+	onMounted(async () => {
+		if (!rootRef.value) return;
+
+		animation = (await import('~/assets/animations/intro/landing.js')).animateLandingIntro;
+		animation.init(rootRef.value);
+	});
+
+	onBeforeUnmount(() => {
+		rootEl = rootRef.value;
+	});
+
+	onUnmounted(() => {
+		if (animation && rootEl) animation.cleanup(rootEl);
+	});
 </script>
 
 <template>
 	<div
 		ref="rootRef"
 		class="HeroScroller"
-		data-scroll-reveal
 	>
 		<div class="HeroScroller__container HeroScroller__container--primary">
 			<StyleTitlePrimary
@@ -21,7 +35,6 @@
 			id="about"
 			class="HeroScroller__region HeroScroller__region--secondary"
 		>
-			<!-- Outside the GSAP title target — fades in only when the GLB is ready. -->
 			<CharacterCompanion />
 
 			<div class="HeroScroller__container HeroScroller__container--secondary">
@@ -53,6 +66,8 @@
 			justify-content: center;
 			height: 50vh;
 			isolation: isolate;
+			transform: translate3d(0, 0, 0);
+			backface-visibility: hidden;
 
 			&--primary {
 				padding-top: var(--core-header-height);

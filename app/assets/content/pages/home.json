@@ -218,7 +218,7 @@
 		{
 			"attrs": {
 				"title": null,
-				"text": "<p>WIP: This section will be a collection of tutorials and articles. Disclaimer: the content below is placeholder. Real articles are on their way.</p>"
+				"text": "<p>This section will be a collection of tutorials and articles. Disclaimer: the content below is placeholder. Real articles are on their way.</p>"
 			},
 			"id": "think-intro",
 			"component": "ContentText"

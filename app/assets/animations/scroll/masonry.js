@@ -1,38 +1,70 @@
-import { createScrollReveal, gpu, reveal } from '~/assets/animations/utils/scroll-reveal.js';
+import { config } from '~/assets/animations/config';
+import { createElementInstanceStore } from '~/assets/animations/utils/create-element-instance-store.js';
+import { getGSAP } from '~/assets/animations/utils/gsap-loader';
+import { scrollTriggerConfig } from '~/assets/animations/utils/scroll-reveal.js';
 
-const animateContentMasonry = createScrollReveal((element, { gsap, ScrollTrigger }) => {
-	const items = element.querySelectorAll('.ContentMasonry__item');
-	if (!items.length) return;
+const { deleteInstance, getInstance, setInstance } = createElementInstanceStore();
 
-	// Lock opacity sync so ready can flip without a flash; bind ST after layout.
-	gsap.set(items, {
-		...gpu,
-		opacity: 0,
-		y: 56,
-		scale: 0.94,
-		filter: 'blur(6px)',
-		transformOrigin: '50% 80%',
-	});
+const from = {
+	opacity: 0,
+	y: 56,
+	scale: 0.94,
+	filter: 'blur(6px)',
+	transformOrigin: '50% 80%',
+};
 
-	requestAnimationFrame(() => {
-		requestAnimationFrame(() => {
-			reveal(items, {
-				trigger: element,
-				to: {
-					opacity: 1,
-					y: 0,
-					scale: 1,
-					filter: 'blur(0px)',
-				},
+const to = {
+	opacity: 1,
+	y: 0,
+	scale: 1,
+	filter: 'blur(0px)',
+};
+
+const ensureInstance = (root) => {
+	let instance = getInstance(root);
+
+	if (!instance) {
+		const { gsap } = getGSAP();
+		instance = { context: gsap.context(() => {}, root) };
+		setInstance(root, instance);
+	}
+
+	return instance;
+};
+
+const animateContentMasonry = {
+	init(root) {
+		if (!root || getInstance(root)) return;
+
+		const items = root.querySelectorAll('.ContentMasonry__item');
+		if (!items.length) return;
+
+		const { gsap, ScrollTrigger } = getGSAP();
+		const instance = ensureInstance(root);
+
+		instance.context.add(() => {
+			gsap.set(items, from);
+			gsap.to(items, {
+				...to,
+				duration: config.duration.reveal,
+				ease: config.ease.reveal,
 				stagger: {
 					amount: 0.55,
 					from: 'start',
 					ease: 'power1.out',
 				},
+				scrollTrigger: scrollTriggerConfig(root),
 			});
 			ScrollTrigger.refresh();
 		});
-	});
-});
+	},
+
+	cleanup(root) {
+		if (!root) return;
+
+		getInstance(root)?.context?.revert();
+		deleteInstance(root);
+	},
+};
 
 export { animateContentMasonry };

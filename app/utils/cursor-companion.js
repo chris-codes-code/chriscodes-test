@@ -1,7 +1,8 @@
 import * as THREE from 'three';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const MODEL_URL = '/models/character.glb';
+const MODEL_URL = '/models/character.opt.glb';
 const TARGET_HEIGHT = 1.7;
 const MAX_LOOK_YAW = 0.32;
 const MAX_LOOK_PITCH = 0.14;
@@ -44,8 +45,7 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 	let glanceHold = 0;
 
 	function onPointerMove(event) {
-		const moved =
-			lastX === null || Math.hypot(event.clientX - lastX, event.clientY - lastY) > 3;
+		const moved = lastX === null || Math.hypot(event.clientX - lastX, event.clientY - lastY) > 3;
 
 		lastX = event.clientX;
 		lastY = event.clientY;
@@ -109,7 +109,11 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 	resizeObserver.observe(canvas);
 	resize();
 
+	const dracoLoader = new DRACOLoader();
+	dracoLoader.setDecoderPath('/draco/');
+
 	const loader = new GLTFLoader();
+	loader.setDRACOLoader(dracoLoader);
 	loader.load(
 		MODEL_URL,
 		(gltf) => {
@@ -188,6 +192,7 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 				}
 			});
 
+			dracoLoader.dispose();
 			renderer.dispose();
 		},
 	};

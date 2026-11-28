@@ -6,7 +6,6 @@ const config = {
 		reveal: 1.05,
 		outro: 0.7,
 		intro: 1.15,
-		headerIntro: 0.55,
 	},
 	ease: {
 		primary: 'power2.out',
