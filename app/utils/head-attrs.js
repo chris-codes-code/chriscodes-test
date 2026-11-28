@@ -1,7 +1,7 @@
 import { getPagePath } from './page-paths.js';
 import { getAbsoluteImageURL } from './absolute-image-url.js';
 
-const SITE_NAME = 'EAT ✱ SLEEP ✱ CREATE ✱ REPEAT';
+const SITE_NAME = 'CODE ✱ CREATE ✱ REPEAT';
 
 const getAttrs = ({ seo, path = '/', image: fallbackImage = null } = {}) => {
 	const { SITE_URL } = useRuntimeConfig().public;

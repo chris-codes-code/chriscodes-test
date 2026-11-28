@@ -26,7 +26,7 @@
 	>
 		<div class="HeroScroller__container HeroScroller__container--primary">
 			<StyleTitlePrimary
-				title="code"
+				title="code create repeat"
 				direction="right"
 			/>
 		</div>
@@ -39,7 +39,7 @@
 
 			<div class="HeroScroller__container HeroScroller__container--secondary">
 				<StyleTitlePrimary
-					title="create"
+					title="code create repeat"
 					level="span"
 				/>
 			</div>

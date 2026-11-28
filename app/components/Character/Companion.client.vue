@@ -1,9 +1,9 @@
 <script setup>
 	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-	// Skip on touch for now — WebGL + GLB load is a likely mobile hitch.
-	const enabled = !prefersReducedMotion() && !prefersNativeScroll();
-	const trackPointer = true;
+	// Touch: show the companion, but skip pointer look-at.
+	const enabled = !prefersReducedMotion();
+	const trackPointer = !prefersNativeScroll();
 
 	const canvasRef = ref(null);
 	const isReady = ref(false);
@@ -90,11 +90,11 @@
 		}
 	}
 
-	@media (prefers-reduced-motion: reduce) {
+	@media (pointer: coarse), (prefers-reduced-motion: reduce) {
 		.CharacterCompanion {
 			filter: none;
 			scale: 1;
-			transition: opacity 0.2s linear;
+			transition: opacity 0.35s linear;
 
 			&--ready {
 				filter: none;
