@@ -56,7 +56,8 @@
 			position: relative;
 
 			&--secondary {
-				height: 50vh;
+				/* svh stays stable when the mobile URL bar shows/hides */
+				height: 50svh;
 			}
 		}
 
@@ -64,7 +65,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			height: 50vh;
+			height: 50svh;
 			isolation: isolate;
 			transform: translate3d(0, 0, 0);
 			backface-visibility: hidden;

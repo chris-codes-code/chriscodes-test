@@ -97,16 +97,29 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 		window.addEventListener('pointerleave', onPointerLeave);
 	}
 
-	function resize() {
-		const width = canvas.clientWidth || window.innerWidth;
-		const height = canvas.clientHeight || window.innerHeight;
+	let lastWidth = 0;
+	let resizeRaf = 0;
 
+	function resize() {
+		const width = Math.round(canvas.clientWidth || window.innerWidth);
+		const height = Math.round(canvas.clientHeight || window.innerHeight);
+
+		// Height-only changes (mobile URL bar) are ignored — only width needs a WebGL reset.
+		if (Math.abs(width - lastWidth) < 2) return;
+
+		lastWidth = width;
 		renderer.setSize(width, height, false);
 		frameCamera(camera, width, height);
 	}
 
-	const resizeObserver = new ResizeObserver(resize);
-	resizeObserver.observe(canvas);
+	const resizeObserver = new ResizeObserver(() => {
+		if (resizeRaf) return;
+		resizeRaf = requestAnimationFrame(() => {
+			resizeRaf = 0;
+			resize();
+		});
+	});
+	resizeObserver.observe(canvas.parentElement || canvas);
 	resize();
 
 	const dracoLoader = new DRACOLoader();
@@ -176,6 +189,7 @@ export function createCursorCompanion(canvas, { onReady, trackPointer = true } =
 			timer.dispose();
 			intersectionObserver.disconnect();
 			resizeObserver.disconnect();
+			if (resizeRaf) cancelAnimationFrame(resizeRaf);
 			if (trackPointer) {
 				window.removeEventListener('pointermove', onPointerMove);
 				window.removeEventListener('pointerleave', onPointerLeave);

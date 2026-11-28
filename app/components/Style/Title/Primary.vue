@@ -125,7 +125,7 @@
 			flex-shrink: 0;
 			margin: 0;
 			font: var(--font-heading);
-			font-size: calc(50vh - var(--core-header-height));
+			font-size: calc(50svh - var(--core-header-height));
 			white-space: nowrap;
 
 			&::after {
