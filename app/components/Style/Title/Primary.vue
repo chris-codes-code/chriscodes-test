@@ -1,4 +1,6 @@
 <script setup>
+	import { prefersNativeScroll } from '~/assets/animations/utils/reduced-motion';
+
 	const SPEED = 60; // px per second
 	const BREAK = '✱';
 
@@ -28,6 +30,9 @@
 		},
 	});
 
+	// Touch: static title only — infinite marquees of ~50svh type are a mobile GPU tax.
+	const animate = !prefersNativeScroll();
+
 	const colorStyle = computed(() => (props.color ? { color: `var(--color-${props.color})` } : undefined));
 
 	const label = computed(() => {
@@ -38,11 +43,13 @@
 
 	const rootRef = ref(null);
 	const trackRef = ref(null);
-	const count = ref(2);
+	const count = ref(animate ? 2 : 1);
 
 	let observer;
 
 	const update = () => {
+		if (!animate) return;
+
 		const root = rootRef.value;
 		const track = trackRef.value;
 		const first = track?.children[0];
@@ -56,6 +63,8 @@
 	};
 
 	onMounted(() => {
+		if (!animate) return;
+
 		update();
 
 		observer = new ResizeObserver(update);
@@ -66,7 +75,9 @@
 		observer?.disconnect();
 	});
 
-	watch(label, () => nextTick(update));
+	watch(label, () => {
+		if (animate) nextTick(update);
+	});
 </script>
 
 <template>
@@ -77,6 +88,7 @@
 		:class="{
 			'StyleTitlePrimary--right': direction === 'right',
 			'StyleTitlePrimary--clip': clip,
+			'StyleTitlePrimary--static': !animate,
 		}"
 		:style="colorStyle"
 	>
@@ -120,6 +132,15 @@
 
 		&--right &__track {
 			animation-direction: reverse;
+		}
+
+		&--static {
+			overflow-x: hidden;
+
+			.StyleTitlePrimary__track {
+				will-change: auto;
+				animation: none;
+			}
 		}
 
 		&__text {
