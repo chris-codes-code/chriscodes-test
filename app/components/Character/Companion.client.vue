@@ -1,16 +1,24 @@
 <script setup>
 	import { prefersNativeScroll, prefersReducedMotion } from '~/assets/animations/utils/reduced-motion';
 
-	// Touch: show the companion, but skip pointer look-at.
 	const enabled = !prefersReducedMotion();
-	const isTouch = prefersNativeScroll();
-	const trackPointer = !isTouch;
+	const useImage = prefersNativeScroll();
+	const trackPointer = !useImage;
 
 	const canvasRef = ref(null);
 	const isReady = ref(false);
 	let companion = null;
 	let idleId = 0;
-	let loadHandler = null;
+
+	const imageRef = ref(null);
+
+	const onImageLoad = () => {
+		isReady.value = true;
+	};
+
+	onMounted(() => {
+		if (useImage && imageRef.value?.complete) isReady.value = true;
+	});
 
 	const startCompanion = async (canvas) => {
 		if (!canvas || companion) return;
@@ -25,35 +33,18 @@
 		});
 	};
 
-	const scheduleStart = (canvas) => {
-		const run = () => {
-			if ('requestIdleCallback' in window) {
-				// Touch: wait for real idle — forced early start fights Draco/WASM + first paint.
-				idleId = window.requestIdleCallback(() => startCompanion(canvas), {
-					timeout: isTouch ? 8000 : 1800,
-				});
-			} else {
-				idleId = window.setTimeout(() => startCompanion(canvas), isTouch ? 2500 : 400);
-			}
-		};
-
-		if (isTouch && document.readyState !== 'complete') {
-			loadHandler = () => run();
-			window.addEventListener('load', loadHandler, { once: true });
-			return;
-		}
-
-		run();
-	};
-
-	if (enabled) {
+	if (enabled && !useImage) {
 		watch(canvasRef, (canvas) => {
 			if (!canvas || companion) return;
-			scheduleStart(canvas);
+
+			if ('requestIdleCallback' in window) {
+				idleId = window.requestIdleCallback(() => startCompanion(canvas), { timeout: 1800 });
+			} else {
+				idleId = window.setTimeout(() => startCompanion(canvas), 400);
+			}
 		});
 
 		onBeforeUnmount(() => {
-			if (loadHandler) window.removeEventListener('load', loadHandler);
 			if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
 			else window.clearTimeout(idleId);
 
@@ -68,9 +59,34 @@
 		v-if="enabled"
 		aria-hidden="true"
 		class="CharacterCompanion"
-		:class="{ 'CharacterCompanion--ready': isReady }"
+		:class="{
+			'CharacterCompanion--ready': isReady,
+			'CharacterCompanion--image': useImage,
+		}"
 	>
+		<picture
+			v-if="useImage"
+			class="CharacterCompanion__picture"
+		>
+			<source
+				srcset="/models/character.webp"
+				type="image/webp"
+			/>
+			<img
+				ref="imageRef"
+				class="CharacterCompanion__image"
+				src="/models/character.png"
+				alt=""
+				width="1200"
+				height="1600"
+				decoding="async"
+				fetchpriority="low"
+				@load="onImageLoad"
+			/>
+		</picture>
+
 		<canvas
+			v-else
 			ref="canvasRef"
 			class="CharacterCompanion__canvas"
 		/>
@@ -102,10 +118,17 @@
 			scale: 1;
 		}
 
-		&__canvas {
+		&__canvas,
+		&__picture,
+		&__image {
 			display: block;
 			width: 100%;
 			height: 100%;
+		}
+
+		&__image {
+			object-fit: contain;
+			object-position: center bottom;
 		}
 	}
 
