@@ -177,9 +177,8 @@
 			position: relative;
 			width: 100%;
 			min-height: 44px;
-			padding: 1.15em 1.25em;
+			padding: 1.15em 1em;
 			font-family: var(--font-family-primary);
-			font-size: 13px;
 			line-height: 1.25;
 			color: currentColor;
 			text-align: inherit;
@@ -189,6 +188,11 @@
 			corner-shape: squircle;
 			outline: none;
 			transition: var(--theme-interactive-transition);
+			font-size: 13px;
+
+			@media (--screen-mobile) {
+				font-size: 16px;
+			}
 
 			&::placeholder {
 				color: rgb(from currentColor r g b / 35%);
